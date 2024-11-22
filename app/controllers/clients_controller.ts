@@ -22,7 +22,6 @@ export default class ClientsController {
 
     public async store({ request, response }: HttpContext) {
         const { email } = request.qs() 
-        console.log(email)
         const payload = await request.validateUsing(createClientValidator)
 
         const existingClient = await Client.query().where('email', email).first()
