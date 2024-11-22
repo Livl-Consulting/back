@@ -7,14 +7,9 @@ export default class OpportunityController {
   public async index({ request }: HttpContext) {
     const { clientId } = request.qs()
 
-    const query = Opportunity.query().preload('client')
-
-    // Filter by clientId if provided
-    if (clientId) {
-      query.where('clientId', clientId)
-    }
-
-    const opportunities = await query
+    const opportunities = await Opportunity.query()
+      .preload('client')
+      .if(clientId, (subQuery) => subQuery.where('clientId', clientId))
 
     return opportunities
   }
