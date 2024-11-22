@@ -12,6 +12,7 @@
 - Start the Docker app
 - Go in the folder `cd postgres-compose`
 - Run the command `docker-compose up -d`
+- Go back to the root project and run `node ace migration:run`
 
 > You can change the different env variables in the compose but do not forget to change your `.env` file as well.
 

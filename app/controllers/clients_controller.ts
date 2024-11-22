@@ -20,17 +20,8 @@ export default class ClientsController {
         return client
     }
 
-    public async store({ request, response }: HttpContext) {
-        const { email } = request.qs() 
+    public async store({ request }: HttpContext) {
         const payload = await request.validateUsing(createClientValidator)
-
-        const existingClient = await Client.query().where('email', email).first()
-
-        if (existingClient) {
-            return response.badRequest({
-                message: 'Email already exists'
-            })
-        }
     
         const client = await Client.create(payload)
         return client
