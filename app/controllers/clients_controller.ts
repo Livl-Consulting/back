@@ -25,7 +25,7 @@ export default class ClientsController {
     
         const client = await Client.create(payload)
         return client
-      }
+    }
 
     public async destroy({ request }: HttpContext) {
         const data = await request.validateUsing(findClientParamsValidator)
