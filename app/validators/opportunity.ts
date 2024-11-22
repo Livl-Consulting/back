@@ -16,11 +16,3 @@ export const findOpportunityParamsValidator = vine.compile(
         })
     })
 )
-
-export const getOpportunitiesParamasValidator = vine.compile(
-    vine.object({
-        params: vine.object({
-            id: vine.number().optional()
-        })
-    })
-)

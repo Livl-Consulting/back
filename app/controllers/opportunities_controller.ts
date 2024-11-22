@@ -1,15 +1,12 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import Opportunity from '../models/opportunity.js'
-import { findOpportunityParamsValidator, getOpportunitiesParamasValidator, opportunityValidator } from '../validators/opportunity.js'
+import { findOpportunityParamsValidator, opportunityValidator } from '../validators/opportunity.js'
 
 export default class OpportunityController {
 
-  public async index({ request }: HttpContext) {
-    const payload = await request.validateUsing(getOpportunitiesParamasValidator)
-
+  public async index({ }: HttpContext) {
     const opportunities = await Opportunity.query()
       .preload('client')
-      .if(payload.params.id, (subQuery) => subQuery.where('clientId', payload.params.id!))
 
     return opportunities
   }
@@ -24,6 +21,7 @@ export default class OpportunityController {
 
   public async show({ request }: HttpContext) {
     const data = await request.validateUsing(findOpportunityParamsValidator)
+    console.log("HEEH")
 
     const opportunity = await Opportunity.query()
       .where('id', data.params.id)
