@@ -21,7 +21,6 @@ export default class OpportunityController {
 
   public async show({ request }: HttpContext) {
     const data = await request.validateUsing(findOpportunityParamsValidator)
-    console.log("HEEH")
 
     const opportunity = await Opportunity.query()
       .where('id', data.params.id)
