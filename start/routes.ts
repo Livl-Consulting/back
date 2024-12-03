@@ -12,6 +12,7 @@ import AutoSwagger from 'adonis-autoswagger'
 import swagger from '#config/swagger'
 const OpportunitiesController = () => import('../app/controllers/opportunities_controller.js')
 const ClientsController = () => import('../app/controllers/clients_controller.js')
+const ProductsController = () => import('../app/controllers/products_controller.js')
 
 router
   .group(() => {
@@ -32,6 +33,16 @@ router
     router.delete('/:id', [OpportunitiesController, 'destroy'])
   })
   .prefix('/api/opportunities')
+
+router
+  .group(() => {
+    router.get('/', [ProductsController, 'index'])
+    router.post('/', [ProductsController, 'store'])
+    router.get('/:id', [ProductsController, 'show'])
+    router.put('/:id', [ProductsController, 'update'])
+    router.delete('/:id', [ProductsController, 'destroy'])
+  })
+  .prefix('/api/products')
 
 // returns swagger in YAML
 router.get('/swagger', async () => {

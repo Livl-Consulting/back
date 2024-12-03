@@ -4,28 +4,19 @@ import { findOpportunityParamsValidator, opportunityValidator } from '../validat
 
 export default class OpportunityController {
   public async index({}: HttpContext) {
-    const opportunities = await Opportunity.query().preload('client')
-
-    return opportunities
+    return await Opportunity.query().preload('client')
   }
 
   public async store({ request }: HttpContext) {
     const payload = await request.validateUsing(opportunityValidator)
 
-    const opportunity = await Opportunity.create(payload)
-
-    return opportunity
+    return await Opportunity.create(payload)
   }
 
   public async show({ request }: HttpContext) {
     const data = await request.validateUsing(findOpportunityParamsValidator)
 
-    const opportunity = await Opportunity.query()
-      .where('id', data.params.id)
-      .preload('client')
-      .firstOrFail()
-
-    return opportunity
+    return await Opportunity.query().where('id', data.params.id).preload('client').firstOrFail()
   }
 
   public async update({ request }: HttpContext) {

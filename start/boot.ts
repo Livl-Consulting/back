@@ -1,6 +1,9 @@
 import app from '@adonisjs/core/services/app'
 import logger from '@adonisjs/core/services/logger'
+import env from './env.js'
 
 app.ready(() => {
-  logger.info(`Swagger UI available at http://localhost:3333/docs`)
+  const host = env.get('HOST')
+  const port = env.get('PORT')
+  logger.info(`Swagger UI available at http://${host}:${port}/docs`)
 })
