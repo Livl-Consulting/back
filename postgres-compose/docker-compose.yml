@@ -1,0 +1,15 @@
+services:
+  postresql:
+    container_name: erp-postgres
+    image: postgres:15.5
+    restart: always
+    environment:
+      POSTGRES_USER: psUser
+      POSTGRES_PASSWORD: psPassword
+      POSTGRES_DB: psApp
+    ports:
+      - 5432:5432
+    volumes:
+      - psql:/var/lib/postgresql/data
+volumes:
+  psql:
