@@ -22,9 +22,5 @@ export default {
     parameters: {}, // OpenAPI conform parameters that are commonly used
     headers: {}, // OpenAPI conform headers that are commonly used
   },
-  securitySchemes: {}, // optional
-  authMiddlewares: ['auth', 'auth:api'], // optional
-  defaultSecurityScheme: 'BearerAuth', // optional
-  persistAuthorization: true, // persist authorization between reloads on the swagger page
   showFullPath: false, // the path displayed after endpoint summary
 }
