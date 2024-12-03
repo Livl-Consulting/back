@@ -3,10 +3,8 @@ import Opportunity from '../models/opportunity.js'
 import { findOpportunityParamsValidator, opportunityValidator } from '../validators/opportunity.js'
 
 export default class OpportunityController {
-
-  public async index({ }: HttpContext) {
-    const opportunities = await Opportunity.query()
-      .preload('client')
+  public async index({}: HttpContext) {
+    const opportunities = await Opportunity.query().preload('client')
 
     return opportunities
   }

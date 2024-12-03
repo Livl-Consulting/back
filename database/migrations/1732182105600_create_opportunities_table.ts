@@ -12,8 +12,16 @@ export default class extends BaseSchema {
       table.timestamp('updated_at')
 
       table.integer('success_opportunity').notNullable()
-      table.enum('status', ['progress', 'validated', 'cancelled'] satisfies OpportunityStatusType[]).defaultTo('progress').notNullable()
-      table.integer('client_id').unsigned().references(`clients.id`).onDelete('CASCADE').notNullable()
+      table
+        .enum('status', ['progress', 'validated', 'cancelled'] satisfies OpportunityStatusType[])
+        .defaultTo('progress')
+        .notNullable()
+      table
+        .integer('client_id')
+        .unsigned()
+        .references(`clients.id`)
+        .onDelete('CASCADE')
+        .notNullable()
     })
   }
 
