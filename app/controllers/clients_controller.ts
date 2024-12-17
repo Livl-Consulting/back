@@ -1,10 +1,21 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import Client from '../models/client.js'
-import { createClientValidator, findClientParamsValidator } from '../validators/client.js'
+import { createClientValidator, findClientParamsValidator, searchClientValidator } from '../validators/client.js'
 
 export default class ClientsController {
   public async index({}: HttpContext) {
     const clients = await Client.query().preload('opportunities')
+    return clients
+  }
+
+  public async search({ request }: HttpContext) {
+    const data = await request.validateUsing(searchClientValidator)
+
+    const clients = await Client.query()
+      .where('name', 'like', `%${data.query}%`)
+      .preload('opportunities')
+      .exec()
+
     return clients
   }
 

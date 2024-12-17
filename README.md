@@ -16,6 +16,11 @@
 
 > You can change the different env variables in the compose but do not forget to change your `.env` file as well.
 
+### Make a migration
+
+- Run the command `node ace make:migration <migration_name>`
+- Run the command `node ace migration:run`
+
 ## Documentation
 
 - The Swagger API documentation is disponible at the link `/docs` route.

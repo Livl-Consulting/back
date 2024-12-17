@@ -24,6 +24,9 @@ export default class Opportunity extends BaseModel {
   @column()
   declare clientId: number
 
+  @column()
+  declare price: number
+
   @belongsTo(() => Client)
   declare client: BelongsTo<typeof Client>
 }

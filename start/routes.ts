@@ -19,7 +19,7 @@ router
     router.get('/', [ClientsController, 'index'])
     router.post('/', [ClientsController, 'store'])
     router.get('/:id', [ClientsController, 'show'])
-    //router.put('/:id', [ClientsController, 'update'])
+    router.get('/search', [ClientsController, 'search'])
     router.delete('/:id', [ClientsController, 'destroy'])
   })
   .prefix('/api/clients')

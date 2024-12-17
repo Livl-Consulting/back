@@ -19,3 +19,9 @@ export const findClientParamsValidator = vine.compile(
     }),
   })
 )
+
+export const searchClientValidator = vine.compile(
+  vine.object({
+    query: vine.string().minLength(2),
+  })
+)
