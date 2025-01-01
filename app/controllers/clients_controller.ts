@@ -5,7 +5,7 @@ import { createClientValidator, findClientParamsValidator, searchClientValidator
 export default class ClientsController {
   public async index({}: HttpContext) {
     const clients = await Client.query().preload('opportunities')
-    return clients
+    return clients.map(client => client.serialize())
   }
 
   public async search({ request }: HttpContext) {

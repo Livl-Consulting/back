@@ -6,7 +6,8 @@ import { findQuoteParamsValidator, quoteValidator } from "../validators/quote.js
 
 export default class QuotesController {
     public async index({}: HttpContext) {
-        return await Quote.query().preload('client').preload('product').preload('opportunity')
+        const quotes = await Quote.query().preload('client').preload('product').preload('opportunity')
+        return quotes.map(quote => quote.serialize())
       }
     
       public async store({ request }: HttpContext) {

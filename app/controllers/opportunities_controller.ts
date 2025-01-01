@@ -4,7 +4,8 @@ import { findOpportunityParamsValidator, opportunityValidator } from '../validat
 
 export default class OpportunityController {
   public async index({}: HttpContext) {
-    return await Opportunity.query().preload('client').preload('product')
+    const opportunities = await Opportunity.query().preload('client').preload('product')
+    return opportunities.map(opportunity => opportunity.serialize())
   }
 
   public async store({ request }: HttpContext) {

@@ -4,7 +4,9 @@ import type { HttpContext } from '@adonisjs/core/http'
 
 export default class ProductsController {
   public async index({}: HttpContext) {
-    return await Product.all()
+    const products = await Product.all()
+    console.log(products.map(product => product.serialize()))
+    return products.map(product => product.serialize())
   }
 
   public async store({ request }: HttpContext) {
