@@ -12,6 +12,7 @@ export default class extends BaseSchema {
 
       table.string('first_name')
       table.string('last_name')
+      table.string('company_name').nullable()
       table.string('email').unique()
     })
   }

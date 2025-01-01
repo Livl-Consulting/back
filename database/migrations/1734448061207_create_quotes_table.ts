@@ -2,7 +2,7 @@ import { BaseSchema } from '@adonisjs/lucid/schema'
 import { SalesProcessStatus } from '../../app/models/sale-process-status.js'
 
 export default class extends BaseSchema {
-  protected tableName = 'opportunities'
+  protected tableName = 'quotes'
 
   async up() {
     this.schema.createTable(this.tableName, (table) => {
@@ -29,6 +29,11 @@ export default class extends BaseSchema {
         .unsigned()
         .references(`products.id`)
         .notNullable()
+      table
+        .integer('opportunity_id')
+        .unsigned()
+        .references(`opportunities.id`)
+        .nullable()
     })
   }
 

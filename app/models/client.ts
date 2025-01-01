@@ -20,6 +20,9 @@ export default class Client extends BaseModel {
   declare firstName: string
 
   @column()
+  declare companyName?: string
+
+  @column()
   declare email: string
 
   @hasMany(() => Opportunity)

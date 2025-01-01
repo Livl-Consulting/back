@@ -5,6 +5,7 @@ export const createClientValidator = vine.compile(
   vine.object({
     lastName: vine.string().minLength(2),
     firstName: vine.string().minLength(2),
+    companyName: vine.string().optional(),
     email: vine
       .string()
       .email()

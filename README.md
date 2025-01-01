@@ -21,6 +21,8 @@
 - Run the command `node ace make:migration <migration_name>`
 - Run the command `node ace migration:run`
 
+> You can also run the command `node ace migration:fresh --seed` to reset the database and seed it with the default data.
+
 ## Documentation
 
 - The Swagger API documentation is disponible at the link `/docs` route.

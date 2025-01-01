@@ -36,6 +36,16 @@ router
 
 router
   .group(() => {
+    router.get('/', [OpportunitiesController, 'index'])
+    router.post('/', [OpportunitiesController, 'store'])
+    router.get('/:id', [OpportunitiesController, 'show'])
+    router.put('/:id', [OpportunitiesController, 'update'])
+    router.delete('/:id', [OpportunitiesController, 'destroy'])
+  })
+  .prefix('/api/quotes')
+
+router
+  .group(() => {
     router.get('/', [ProductsController, 'index'])
     router.post('/', [ProductsController, 'store'])
     router.get('/:id', [ProductsController, 'show'])

@@ -1,11 +1,13 @@
 import { DateTime } from 'luxon'
 import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
-import Client from './client.js'
 import type { BelongsTo } from '@adonisjs/lucid/types/relations'
-import type { SalesProcessStatus } from './sale-process-status.js'
+import Client from './client.js'
 import Product from './product.js'
+import Opportunity from './opportunity.js'
+import type { SalesProcessStatus } from './sale-process-status.js'
 
-export default class Opportunity extends BaseModel {
+
+export default class Quote extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
 
@@ -16,10 +18,10 @@ export default class Opportunity extends BaseModel {
   declare updatedAt: DateTime
 
   @column()
-  declare successProbability: number
+  declare status: SalesProcessStatus
 
   @column()
-  declare status: SalesProcessStatus
+  declare successProbability: number
 
   @column()
   declare price: number
@@ -35,4 +37,10 @@ export default class Opportunity extends BaseModel {
 
   @belongsTo(() => Product)
   declare product: BelongsTo<typeof Product>
+
+  @column()
+  declare opportunityId?: number
+
+  @belongsTo(() => Opportunity)
+  declare opportunity: BelongsTo<typeof Opportunity>
 }
