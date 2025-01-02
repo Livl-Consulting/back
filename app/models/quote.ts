@@ -4,8 +4,7 @@ import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 import Client from './client.js'
 import Product from './product.js'
 import Opportunity from './opportunity.js'
-import type { SalesProcessStatus } from './sale-process-status.js'
-
+import type { SalesProcessStatus } from './sale_process_status.js'
 
 export default class Quote extends BaseModel {
   @column({ isPrimary: true })

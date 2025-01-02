@@ -1,5 +1,5 @@
 import vine from '@vinejs/vine'
-import { SalesProcessStatus } from '../models/sale-process-status.js'
+import { SalesProcessStatus } from '../models/sale_process_status.js'
 
 export const quoteValidator = vine.compile(
   vine.object({

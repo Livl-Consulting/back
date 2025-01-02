@@ -2,7 +2,7 @@ import { DateTime } from 'luxon'
 import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
 import Client from './client.js'
 import type { BelongsTo } from '@adonisjs/lucid/types/relations'
-import type { SalesProcessStatus } from './sale-process-status.js'
+import type { SalesProcessStatus } from './sale_process_status.js'
 import Product from './product.js'
 
 export default class Opportunity extends BaseModel {

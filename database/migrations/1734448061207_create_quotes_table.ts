@@ -1,5 +1,5 @@
 import { BaseSchema } from '@adonisjs/lucid/schema'
-import { SalesProcessStatus } from '../../app/models/sale-process-status.js'
+import { SalesProcessStatus } from '../../app/models/sale_process_status.js'
 
 export default class extends BaseSchema {
   protected tableName = 'quotes'
@@ -18,22 +18,10 @@ export default class extends BaseSchema {
         .enum('status', ['progress', 'validated', 'cancelled'] satisfies SalesProcessStatus[])
         .defaultTo('progress')
         .notNullable()
-        
-      table
-        .integer('client_id')
-        .unsigned()
-        .references(`clients.id`)
-        .notNullable()
-      table
-        .integer('product_id')
-        .unsigned()
-        .references(`products.id`)
-        .notNullable()
-      table
-        .integer('opportunity_id')
-        .unsigned()
-        .references(`opportunities.id`)
-        .nullable()
+
+      table.integer('client_id').unsigned().references(`clients.id`).notNullable()
+      table.integer('product_id').unsigned().references(`products.id`).notNullable()
+      table.integer('opportunity_id').unsigned().references(`opportunities.id`).nullable()
     })
   }
 

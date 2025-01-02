@@ -1,7 +1,7 @@
 import { BaseSeeder } from '@adonisjs/lucid/seeders'
 import Client from '../../app/models/client.js'
 
-export default class extends BaseSeeder {
+export default class ClientSeeder extends BaseSeeder {
   async run() {
     await Client.createMany([
       {
