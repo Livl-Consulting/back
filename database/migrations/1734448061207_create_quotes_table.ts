@@ -21,7 +21,7 @@ export default class extends BaseSchema {
 
       table.integer('client_id').unsigned().references(`clients.id`).notNullable()
       table.integer('product_id').unsigned().references(`products.id`).notNullable()
-      table.integer('opportunity_id').unsigned().references(`opportunities.id`).nullable()
+      table.integer('opportunity_id').unsigned().references(`opportunities.id`).nullable().unique() // Can be null and if not, must be unique to avoid multiple quotes for the same opportunity
     })
   }
 

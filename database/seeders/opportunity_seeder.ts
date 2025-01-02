@@ -13,7 +13,7 @@ export default class extends BaseSeeder {
       },
       {
         successProbability: 60,
-        status: 'progress',
+        status: 'validated',
         price: 20000,
         clientId: 1,
         productId: 2,

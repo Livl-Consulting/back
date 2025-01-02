@@ -7,11 +7,13 @@ export default class ClientSeeder extends BaseSeeder {
       {
         firstName: 'Olivier',
         lastName: 'Bonhomme',
+        companyName: 'Airbus',
         email: 'olivier.bonhomme@airbus.fr',
       },
       {
         firstName: 'Neil',
         lastName: 'Armstrong',
+        companyName: 'NASA',
         email: 'neil.armstrong@nasa.com',
       },
     ])

@@ -29,6 +29,7 @@ router
   .group(() => {
     router.get('/', [OpportunitiesController, 'index'])
     router.post('/', [OpportunitiesController, 'store'])
+    router.post('/quote/:id', [OpportunitiesController, 'quote'])
     router.get('/:id', [OpportunitiesController, 'show'])
     router.put('/:id', [OpportunitiesController, 'update'])
     router.delete('/:id', [OpportunitiesController, 'destroy'])
