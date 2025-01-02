@@ -1,9 +1,10 @@
 import { DateTime } from 'luxon'
-import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
+import { BaseModel, belongsTo, column, hasOne } from '@adonisjs/lucid/orm'
 import Client from './client.js'
-import type { BelongsTo } from '@adonisjs/lucid/types/relations'
+import type { BelongsTo, HasOne } from '@adonisjs/lucid/types/relations'
 import type { SalesProcessStatus } from './sale_process_status.js'
 import Product from './product.js'
+import Quote from './quote.js'
 
 export default class Opportunity extends BaseModel {
   @column({ isPrimary: true })
@@ -35,4 +36,7 @@ export default class Opportunity extends BaseModel {
 
   @belongsTo(() => Product)
   declare product: BelongsTo<typeof Product>
+
+  @hasOne(() => Quote)
+  declare quote: HasOne<typeof Quote>
 }

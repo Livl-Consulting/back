@@ -8,7 +8,7 @@ import {
 
 export default class ClientsController {
   public async index({}: HttpContext) {
-    const clients = await Client.query().preload('opportunities')
+    const clients = await Client.query().preload('opportunities').preload('quotes')
     return clients.map((client) => client.serialize())
   }
 
