@@ -1,7 +1,7 @@
 // import type { HttpContext } from '@adonisjs/core/http'
 
 import { HttpContext } from '@adonisjs/core/http'
-import Quote from '../models/quote.js'
+import Quote from '#models/quote'
 import {
   createQuoteValidator,
   findQuoteParamsValidator,
@@ -10,7 +10,8 @@ import {
 
 export default class QuotesController {
   public async index({}: HttpContext) {
-    const quotes = await Quote.query().preload('client').preload('product').preload('opportunity')
+    // @ts-ignore: TODO Argument of type '"opportunity"' is not assignable to parameter of type 'ExtractModelRelations<Quote>'.
+    const quotes = await Quote.query().preload('client').preload('product').preload('opportunity') 
 
     return quotes.map((quote) => quote.serialize())
   }
