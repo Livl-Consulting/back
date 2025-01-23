@@ -4,7 +4,8 @@ import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 import Client from './client.js'
 import Product from './product.js'
 import Opportunity from './opportunity.js'
-import type { SalesProcessStatus } from './sale_process_status.js'
+import type { SalesProcessStatus } from '../types/sale_process_status.js'
+import Order from './order.js'
 
 export default class Quote extends BaseModel {
   @column({ isPrimary: true })
@@ -42,4 +43,10 @@ export default class Quote extends BaseModel {
 
   @belongsTo(() => Opportunity)
   declare opportunity: BelongsTo<typeof Opportunity>
+
+  @column()
+  declare orderId?: number
+
+  @belongsTo(() => Order)
+  declare order: BelongsTo<typeof Order>
 }

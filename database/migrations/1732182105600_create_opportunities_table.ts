@@ -1,5 +1,5 @@
 import { BaseSchema } from '@adonisjs/lucid/schema'
-import { SalesProcessStatus } from '../../app/models/sale_process_status.js'
+import { SalesProcessStatus } from '../../app/types/sale_process_status.js'
 
 export default class extends BaseSchema {
   protected tableName = 'opportunities'

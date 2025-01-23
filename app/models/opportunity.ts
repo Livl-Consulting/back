@@ -2,7 +2,7 @@ import { DateTime } from 'luxon'
 import { BaseModel, belongsTo, column, hasOne } from '@adonisjs/lucid/orm'
 import Client from './client.js'
 import type { BelongsTo, HasOne } from '@adonisjs/lucid/types/relations'
-import type { SalesProcessStatus } from './sale_process_status.js'
+import type { SalesProcessStatus } from '../types/sale_process_status.js'
 import Product from './product.js'
 import Quote from './quote.js'
 
