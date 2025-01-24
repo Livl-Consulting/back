@@ -16,7 +16,8 @@ export default class ClientsController {
     const data = await request.validateUsing(searchClientValidator)
 
     const clients = await Client.query()
-      .where('name', 'like', `%${data.query}%`)
+      .where('firstName', 'like', `%${data.query}%`)
+      .orWhere('lastName', 'like', `%${data.query}%`)
       .preload('opportunities')
       .exec()
 
