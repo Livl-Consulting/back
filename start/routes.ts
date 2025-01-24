@@ -20,8 +20,8 @@ router
   .group(() => {
     router.get('/', [ClientsController, 'index'])
     router.post('/', [ClientsController, 'store'])
-    router.get('/:id', [ClientsController, 'show'])
     router.get('/search', [ClientsController, 'search'])
+    router.get('/:id', [ClientsController, 'show'])
     router.delete('/:id', [ClientsController, 'destroy'])
   })
   .prefix('/api/clients')
