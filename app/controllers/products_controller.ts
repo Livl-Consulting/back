@@ -1,12 +1,19 @@
 import Product from '#models/product'
 import { findProductParamsValidator, productValidator } from '#validators/product'
 import type { HttpContext } from '@adonisjs/core/http'
+import { searchClientValidator } from '#validators/client'
 
 export default class ProductsController {
   public async index({}: HttpContext) {
     const products = await Product.all()
     console.log(products.map((product) => product.serialize()))
     return products.map((product) => product.serialize())
+  }
+
+  public async search({ request }: HttpContext) {
+    const data = await request.validateUsing(searchClientValidator)
+
+    return await Product.query().where('name', 'like', `%${data.query}%`).exec()
   }
 
   public async store({ request }: HttpContext) {

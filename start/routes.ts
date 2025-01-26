@@ -50,6 +50,7 @@ router
   .group(() => {
     router.get('/', [ProductsController, 'index'])
     router.post('/', [ProductsController, 'store'])
+    router.get('/search', [ProductsController, 'search'])
     router.get('/:id', [ProductsController, 'show'])
     router.put('/:id', [ProductsController, 'update'])
     router.delete('/:id', [ProductsController, 'destroy'])
