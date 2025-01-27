@@ -92,8 +92,17 @@ A sales opportunity is basically at the really beginning when you want to propos
 
 ### Order 
 
-... TODO Gimenez
+Same as the previous ones, to make an order just give the quote id, the product id and the client id and the status will be set to `progress` by default.
 
+```json
+{
+    "quoteId": 1,
+    "clientId": 1,
+    "productId": 1,
+    "price": 10000,
+    "status": "progress" // Optional, will be set to "progress" by default
+}
+```
 
 ## Purchase flow
 

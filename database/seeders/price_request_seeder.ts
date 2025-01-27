@@ -10,7 +10,7 @@ interface ProductDetails {
 export default class PriceRequestSeeder extends BaseSeeder {
   async run() {
     // Fetch existing products
-    const products = await Product.all()
+    const products = await Product.query().where('type', 'both').orWhere('type', 'purchase').exec()
 
     // Create a new PriceRequest
     const priceRequest = await PriceRequest.create({
