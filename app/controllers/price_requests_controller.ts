@@ -50,8 +50,9 @@ export default class PriceRequestsController {
 
     priceRequest.merge(payload)
     await priceRequest.save()
+    const refreshedPriceRequest = await priceRequest.refresh()
 
-    return priceRequest
+    return refreshedPriceRequest
   }
 
   public async show({ request, response }: HttpContext) {

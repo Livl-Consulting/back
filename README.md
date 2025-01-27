@@ -104,6 +104,7 @@ You can make a price request with a `POST` Request on the route `/api/price-requ
 ```json
 {
   "supplierId": 1,
+  "status": "progress", // Optional, will be set to "progress" by default
   "products": [
     {
       "id": 1,
