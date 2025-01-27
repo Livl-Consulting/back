@@ -1,0 +1,1793 @@
+openapi: "3.0.0"
+info:
+  title: "ERP - Flux Ventes/Achat"
+  version: "1.0.0"
+  description: ""
+components:
+  responses:
+    Forbidden:
+      description: "Access token is missing or invalid"
+    Accepted:
+      description: "The request was accepted"
+    Created:
+      description: "The resource has been created"
+    NotFound:
+      description: "The resource has been created"
+    NotAcceptable:
+      description: "The resource has been created"
+  securitySchemes:
+    BearerAuth:
+      type: "http"
+      scheme: "bearer"
+    BasicAuth:
+      type: "http"
+      scheme: "basic"
+    ApiKeyAuth:
+      type: "apiKey"
+      in: "header"
+      name: "X-API-Key"
+  schemas:
+    Any:
+      description: "Any JSON object not defined as schema"
+    Client:
+      type: "object"
+      required: []
+      properties:
+        id:
+          type: "number"
+          example: 449
+        created_at:
+          type: "string"
+          example: "2021-03-23T16:13:08.489+01:00"
+          format: "date-time"
+        updated_at:
+          type: "string"
+          example: "2021-03-23T16:13:08.489+01:00"
+          format: "date-time"
+        last_name:
+          type: "string"
+          example: "Doe"
+        first_name:
+          type: "string"
+          example: "John"
+        company_name:
+          type: "string"
+          example: "Lorem Ipsum"
+        email:
+          type: "string"
+          example: "johndoe@example.com"
+          format: "email"
+        opportunities:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/Opportunity"
+            example: null
+        quotes:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/Quote"
+            example: null
+        orders:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/Order"
+            example: null
+      description: "Client (Model)"
+    Opportunity:
+      type: "object"
+      required: []
+      properties:
+        id:
+          type: "number"
+          example: 375
+        created_at:
+          type: "string"
+          example: "2021-03-23T16:13:08.489+01:00"
+          format: "date-time"
+        updated_at:
+          type: "string"
+          example: "2021-03-23T16:13:08.489+01:00"
+          format: "date-time"
+        success_probability:
+          type: "number"
+          example: 411
+        status:
+          $ref: "#/components/schemas/SalesProcessStatus"
+          example: null
+        price:
+          type: "number"
+          example: 10.5
+        client_id:
+          type: "number"
+          example: 227
+        client:
+          $ref: "#/components/schemas/Client"
+          example: null
+        product_id:
+          type: "number"
+          example: 60
+        product:
+          $ref: "#/components/schemas/Product"
+          example: null
+        quote:
+          $ref: "#/components/schemas/Quote"
+          example: null
+      description: "Opportunity (Model)"
+    Order:
+      type: "object"
+      required: []
+      properties:
+        id:
+          type: "number"
+          example: 81
+        price:
+          type: "number"
+          example: 10.5
+        client_id:
+          type: "number"
+          example: 487
+        client:
+          $ref: "#/components/schemas/Client"
+          example: null
+        product_id:
+          type: "number"
+          example: 104
+        product:
+          $ref: "#/components/schemas/Product"
+          example: null
+        quote_id:
+          type: "number"
+          example: 443
+        quote:
+          $ref: "#/components/schemas/Quote"
+          example: null
+        status:
+          $ref: "#/components/schemas/OrderStatus"
+          example: null
+        created_at:
+          type: "string"
+          example: "2021-03-23T16:13:08.489+01:00"
+          format: "date-time"
+        updated_at:
+          type: "string"
+          example: "2021-03-23T16:13:08.489+01:00"
+          format: "date-time"
+      description: "Order (Model)"
+    PriceRequest:
+      type: "object"
+      required: []
+      properties:
+        id:
+          type: "number"
+          example: 543
+        created_at:
+          type: "string"
+          example: "2021-03-23T16:13:08.489+01:00"
+          format: "date-time"
+        updated_at:
+          type: "string"
+          example: "2021-03-23T16:13:08.489+01:00"
+          format: "date-time"
+        supplier_id:
+          type: "number"
+          example: 921
+        supplier:
+          $ref: "#/components/schemas/Supplier"
+          example: null
+        status:
+          $ref: "#/components/schemas/SalesProcessStatus"
+          example: null
+        products:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/Product"
+            example: null
+      description: "PriceRequest (Model)"
+    Product:
+      type: "object"
+      required: []
+      properties:
+        id:
+          type: "number"
+          example: 131
+        created_at:
+          type: "string"
+          example: "2021-03-23T16:13:08.489+01:00"
+          format: "date-time"
+        updated_at:
+          type: "string"
+          example: "2021-03-23T16:13:08.489+01:00"
+          format: "date-time"
+        name:
+          type: "string"
+          example: "John Doe"
+        description:
+          type: "string"
+          example: "Lorem ipsum dolor sit amet"
+        price:
+          type: "number"
+          example: 10.5
+        type:
+          $ref: "#/components/schemas/ProductType"
+          example: null
+        products:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/PriceRequest"
+            example: null
+      description: "Product (Model)"
+    PurchaseOrder:
+      type: "object"
+      required: []
+      properties:
+        id:
+          type: "number"
+          example: 153
+        created_at:
+          type: "string"
+          example: "2021-03-23T16:13:08.489+01:00"
+          format: "date-time"
+        updated_at:
+          type: "string"
+          example: "2021-03-23T16:13:08.489+01:00"
+          format: "date-time"
+        supplier_id:
+          type: "number"
+          example: 850
+        supplier:
+          $ref: "#/components/schemas/Supplier"
+          example: null
+        status:
+          $ref: "#/components/schemas/PurchaseOrderStatus"
+          example: null
+        products:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/Product"
+            example: null
+        supplier_payments:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/SupplierPayment"
+            example: null
+      description: "PurchaseOrder (Model)"
+    Quote:
+      type: "object"
+      required: []
+      properties:
+        id:
+          type: "number"
+          example: 664
+        created_at:
+          type: "string"
+          example: "2021-03-23T16:13:08.489+01:00"
+          format: "date-time"
+        updated_at:
+          type: "string"
+          example: "2021-03-23T16:13:08.489+01:00"
+          format: "date-time"
+        status:
+          $ref: "#/components/schemas/SalesProcessStatus"
+          example: null
+        success_probability:
+          type: "number"
+          example: 854
+        price:
+          type: "number"
+          example: 10.5
+        client_id:
+          type: "number"
+          example: 90
+        client:
+          $ref: "#/components/schemas/Client"
+          example: null
+        product_id:
+          type: "number"
+          example: 368
+        product:
+          $ref: "#/components/schemas/Product"
+          example: null
+        opportunity_id:
+          type: "number"
+          example: 660
+        opportunity:
+          $ref: "#/components/schemas/Opportunity"
+          example: null
+        order_id:
+          type: "number"
+          example: 889
+        order:
+          $ref: "#/components/schemas/Order"
+          example: null
+      description: "Quote (Model)"
+    Supplier:
+      type: "object"
+      required: []
+      properties:
+        id:
+          type: "number"
+          example: 273
+        created_at:
+          type: "string"
+          example: "2021-03-23T16:13:08.489+01:00"
+          format: "date-time"
+        updated_at:
+          type: "string"
+          example: "2021-03-23T16:13:08.489+01:00"
+          format: "date-time"
+        last_name:
+          type: "string"
+          example: "Doe"
+        first_name:
+          type: "string"
+          example: "John"
+        company_name:
+          type: "string"
+          example: "Lorem Ipsum"
+        email:
+          type: "string"
+          example: "johndoe@example.com"
+          format: "email"
+        purchase_orders:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/PurchaseOrder"
+            example: null
+        price_requests:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/PriceRequest"
+            example: null
+        supplier_payments:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/SupplierPayment"
+            example: null
+      description: "Supplier (Model)"
+    SupplierPayment:
+      type: "object"
+      required: []
+      properties:
+        id:
+          type: "number"
+          example: 89
+        created_at:
+          type: "string"
+          example: "2021-03-23T16:13:08.489+01:00"
+          format: "date-time"
+        updated_at:
+          type: "string"
+          example: "2021-03-23T16:13:08.489+01:00"
+          format: "date-time"
+        supplier_id:
+          type: "number"
+          example: 215
+        supplier:
+          $ref: "#/components/schemas/Supplier"
+          example: null
+        amount:
+          type: "number"
+          example: 345
+        notes:
+          type: "string"
+          example: "Lorem Ipsum"
+        payment_method:
+          $ref: "#/components/schemas/PaymentMethod"
+          example: null
+        payment_date:
+          type: "string"
+          example: "2021-03-23T16:13:08.489+01:00"
+          format: "date-time"
+        purchase_order_id:
+          type: "number"
+          example: 313
+        purchase_order:
+          $ref: "#/components/schemas/PurchaseOrder"
+          example: null
+      description: "SupplierPayment (Model)"
+    PaginationMeta:
+      type: "object"
+      properties:
+        total:
+          type: "number"
+          example: 100
+          nullable: false
+        page:
+          type: "number"
+          example: 2
+          nullable: false
+        perPage:
+          type: "number"
+          example: 10
+          nullable: false
+        currentPage:
+          type: "number"
+          example: 3
+          nullable: false
+        lastPage:
+          type: "number"
+          example: 10
+          nullable: false
+        firstPage:
+          type: "number"
+          example: 1
+          nullable: false
+        lastPageUrl:
+          type: "string"
+          example: "/?page=10"
+          nullable: false
+        firstPageUrl:
+          type: "string"
+          example: "/?page=1"
+          nullable: false
+        nextPageUrl:
+          type: "string"
+          example: "/?page=6"
+          nullable: false
+        previousPageUrl:
+          type: "string"
+          example: "/?page=5"
+          nullable: false
+    createClientValidator:
+      type: "object"
+      properties:
+        lastName:
+          type: "string"
+          example: "Lorem Ipsum"
+          required: true
+          minLength: 2
+        firstName:
+          type: "string"
+          example: "Lorem Ipsum"
+          required: true
+          minLength: 2
+        companyName:
+          type: "string"
+          example: "Lorem Ipsum"
+        email:
+          type: "string"
+          example: "Lorem Ipsum"
+          required: true
+      example:
+        lastName: "Lorem Ipsum"
+        firstName: "Lorem Ipsum"
+        companyName: "Lorem Ipsum"
+        email: "Lorem Ipsum"
+      description: "createClientValidator (Validator)"
+    findClientParamsValidator:
+      type: "object"
+      properties:
+        params:
+          type: "object"
+          properties:
+            id:
+              type: "number"
+              example: 649
+              required: true
+          required: true
+      example:
+        params:
+          id: 649
+      description: "findClientParamsValidator (Validator)"
+    searchClientValidator:
+      type: "object"
+      properties:
+        query:
+          type: "string"
+          example: "Lorem Ipsum"
+          required: true
+          minLength: 2
+      example:
+        query: "Lorem Ipsum"
+      description: "searchClientValidator (Validator)"
+    createOpportunityValidator:
+      type: "object"
+      properties:
+        clientId:
+          type: "number"
+          example: 567
+          required: true
+        successProbability:
+          type: "number"
+          example: 196
+          maximum: 100
+          required: true
+        price:
+          type: "number"
+          example: 200
+          required: true
+        productId:
+          type: "number"
+          example: 244
+          required: true
+      example:
+        clientId: 567
+        successProbability: 196
+        price: 200
+        productId: 244
+      description: "createOpportunityValidator (Validator)"
+    findOpportunityParamsValidator:
+      type: "object"
+      properties:
+        params:
+          type: "object"
+          properties:
+            id:
+              type: "number"
+              example: 438
+              required: true
+          required: true
+      example:
+        params:
+          id: 438
+      description: "findOpportunityParamsValidator (Validator)"
+    opportunityValidator:
+      type: "object"
+      properties:
+        clientId:
+          type: "number"
+          example: 351
+          required: true
+        successProbability:
+          type: "number"
+          example: 149
+          maximum: 100
+          required: true
+        status:
+          type: "number"
+          example: 704
+          choices:
+            - "progress"
+            - "validated"
+            - "cancelled"
+          required: true
+        price:
+          type: "number"
+          example: 83
+          required: true
+        productId:
+          type: "number"
+          example: 873
+          required: true
+      example:
+        clientId: 351
+        successProbability: 149
+        status: 704
+        price: 83
+        productId: 873
+      description: "opportunityValidator (Validator)"
+    createOrderValidator:
+      type: "object"
+      properties:
+        clientId:
+          type: "number"
+          example: 774
+          required: true
+        price:
+          type: "number"
+          example: 684
+          required: true
+        productId:
+          type: "number"
+          example: 939
+          required: true
+        quoteId:
+          type: "number"
+          example: 546
+      example:
+        clientId: 774
+        price: 684
+        productId: 939
+        quoteId: 546
+      description: "createOrderValidator (Validator)"
+    findOrderParamsValidator:
+      type: "object"
+      properties:
+        params:
+          type: "object"
+          properties:
+            id:
+              type: "number"
+              example: 801
+              required: true
+          required: true
+      example:
+        params:
+          id: 801
+      description: "findOrderParamsValidator (Validator)"
+    createPriceRequestValidator:
+      type: "object"
+      properties:
+        supplierId:
+          type: "number"
+          example: 709
+          required: true
+        products:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              id:
+                type: "number"
+                example: 921
+                required: true
+              quantity:
+                type: "number"
+                example: 1
+                minimum: 1
+                required: true
+              unit_price:
+                type: "number"
+                example: 41
+                required: true
+          required: true
+      example:
+        supplierId: 709
+        products:
+          - id: 921
+            quantity: 1
+            unit_price: 41
+      description: "createPriceRequestValidator (Validator)"
+    findPriceRequestParamsValidator:
+      type: "object"
+      properties:
+        params:
+          type: "object"
+          properties:
+            id:
+              type: "number"
+              example: 948
+              required: true
+          required: true
+      example:
+        params:
+          id: 948
+      description: "findPriceRequestParamsValidator (Validator)"
+    updatePriceRequestValidator:
+      type: "object"
+      properties:
+        status:
+          type: "number"
+          example: 128
+          choices:
+            - "progress"
+            - "validated"
+            - "cancelled"
+          required: true
+      example:
+        status: 128
+      description: "updatePriceRequestValidator (Validator)"
+    findProductParamsValidator:
+      type: "object"
+      properties:
+        params:
+          type: "object"
+          properties:
+            id:
+              type: "number"
+              example: 499
+              required: true
+          required: true
+      example:
+        params:
+          id: 499
+      description: "findProductParamsValidator (Validator)"
+    productValidator:
+      type: "object"
+      properties:
+        name:
+          type: "string"
+          example: "Lorem Ipsum"
+          required: true
+          minLength: 3
+        description:
+          type: "string"
+          example: "Lorem Ipsum"
+        price:
+          type: "number"
+          example: 457
+          required: true
+        type:
+          type: "number"
+          example: 79
+          choices:
+            - "sale"
+            - "purchase"
+            - "both"
+          required: true
+      example:
+        name: "Lorem Ipsum"
+        description: "Lorem Ipsum"
+        price: 457
+        type: 79
+      description: "productValidator (Validator)"
+    createPurchaseOrderValidator:
+      type: "object"
+      properties:
+        supplierId:
+          type: "number"
+          example: 183
+          required: true
+        products:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              id:
+                type: "number"
+                example: 846
+                required: true
+              quantity:
+                type: "number"
+                example: 1
+                minimum: 1
+                required: true
+              unit_price:
+                type: "number"
+                example: 4
+                required: true
+          required: true
+      example:
+        supplierId: 183
+        products:
+          - id: 846
+            quantity: 1
+            unit_price: 4
+      description: "createPurchaseOrderValidator (Validator)"
+    findPurchaseOrderParamsValidator:
+      type: "object"
+      properties:
+        params:
+          type: "object"
+          properties:
+            id:
+              type: "number"
+              example: 439
+              required: true
+          required: true
+      example:
+        params:
+          id: 439
+      description: "findPurchaseOrderParamsValidator (Validator)"
+    updatePurchaseOrderValidator:
+      type: "object"
+      properties:
+        status:
+          type: "number"
+          example: 239
+          choices:
+            - "progress"
+            - "received"
+            - "invoiced"
+            - "cancelled"
+          required: true
+      example:
+        status: 239
+      description: "updatePurchaseOrderValidator (Validator)"
+    createQuoteValidator:
+      type: "object"
+      properties:
+        clientId:
+          type: "number"
+          example: 736
+          required: true
+        successProbability:
+          type: "number"
+          example: 413
+          maximum: 100
+          required: true
+        price:
+          type: "number"
+          example: 9
+          required: true
+        productId:
+          type: "number"
+          example: 9
+          required: true
+        opportunityId:
+          type: "number"
+          example: 497
+      example:
+        clientId: 736
+        successProbability: 413
+        price: 9
+        productId: 9
+        opportunityId: 497
+      description: "createQuoteValidator (Validator)"
+    findQuoteParamsValidator:
+      type: "object"
+      properties:
+        params:
+          type: "object"
+          properties:
+            id:
+              type: "number"
+              example: 750
+              required: true
+          required: true
+      example:
+        params:
+          id: 750
+      description: "findQuoteParamsValidator (Validator)"
+    quoteValidator:
+      type: "object"
+      properties:
+        clientId:
+          type: "number"
+          example: 475
+          required: true
+        successProbability:
+          type: "number"
+          example: 789
+          maximum: 100
+          required: true
+        status:
+          type: "number"
+          example: 140
+          choices:
+            - "progress"
+            - "validated"
+            - "cancelled"
+          required: true
+        price:
+          type: "number"
+          example: 173
+          required: true
+        productId:
+          type: "number"
+          example: 419
+          required: true
+        opportunityId:
+          type: "number"
+          example: 160
+      example:
+        clientId: 475
+        successProbability: 789
+        status: 140
+        price: 173
+        productId: 419
+        opportunityId: 160
+      description: "quoteValidator (Validator)"
+    createSupplierValidator:
+      type: "object"
+      properties:
+        lastName:
+          type: "string"
+          example: "Lorem Ipsum"
+          required: true
+          minLength: 2
+        firstName:
+          type: "string"
+          example: "Lorem Ipsum"
+          required: true
+          minLength: 2
+        companyName:
+          type: "string"
+          example: "Lorem Ipsum"
+        email:
+          type: "string"
+          example: "Lorem Ipsum"
+          required: true
+      example:
+        lastName: "Lorem Ipsum"
+        firstName: "Lorem Ipsum"
+        companyName: "Lorem Ipsum"
+        email: "Lorem Ipsum"
+      description: "createSupplierValidator (Validator)"
+    findSupplierParamsValidator:
+      type: "object"
+      properties:
+        params:
+          type: "object"
+          properties:
+            id:
+              type: "number"
+              example: 212
+              required: true
+          required: true
+      example:
+        params:
+          id: 212
+      description: "findSupplierParamsValidator (Validator)"
+    searchSupplierValidator:
+      type: "object"
+      properties:
+        query:
+          type: "string"
+          example: "Lorem Ipsum"
+          required: true
+          minLength: 2
+      example:
+        query: "Lorem Ipsum"
+      description: "searchSupplierValidator (Validator)"
+    createSupplierPaymentValidator:
+      type: "object"
+      properties:
+        purchaseOrderId:
+          type: "number"
+          example: 1
+          minimum: 1
+          required: true
+        amount:
+          type: "number"
+          example: 0.01
+          minimum: 0.01
+          required: true
+        paymentMethod:
+          type: "number"
+          example: 560
+          choices:
+            - "bank_transfer"
+            - "credit_card"
+            - "cash"
+            - "other"
+            - "paypal"
+            - "check"
+          required: true
+        notes:
+          type: "string"
+          example: "Lorem Ipsum"
+        paymentDate:
+          type: "number"
+          example: 749
+        supplierId:
+          type: "number"
+          example: 1
+          minimum: 1
+          required: true
+      example:
+        purchaseOrderId: 1
+        amount: 0.01
+        paymentMethod: 560
+        notes: "Lorem Ipsum"
+        paymentDate: 749
+        supplierId: 1
+      description: "createSupplierPaymentValidator (Validator)"
+    findSupplierPaymentParamsValidator:
+      type: "object"
+      properties:
+        params:
+          type: "object"
+          properties:
+            id:
+              type: "number"
+              example: 20
+              required: true
+          required: true
+      example:
+        params:
+          id: 20
+      description: "findSupplierPaymentParamsValidator (Validator)"
+    updateSupplierPaymentValidator:
+      type: "object"
+      properties:
+        paymentMethod:
+          type: "number"
+          example: 382
+          choices:
+            - "bank_transfer"
+            - "credit_card"
+            - "cash"
+            - "other"
+            - "paypal"
+            - "check"
+        notes:
+          type: "string"
+          example: "Lorem Ipsum"
+        paymentDate:
+          type: "number"
+          example: 108
+          required: true
+      example:
+        paymentMethod: 382
+        notes: "Lorem Ipsum"
+        paymentDate: 108
+      description: "updateSupplierPaymentValidator (Validator)"
+paths:
+  /api/clients:
+    get:
+      summary: "Get a list of clients (index)"
+      description: "\n\n _C:\\Users\\Julien\\Documents\\CNAM\\ERP\\Projet\\back\\config/../app/../app/controllers/clients_controller.ts_ - **index**"
+      parameters: []
+      tags:
+        - "CLIENTS"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json: {}
+      security: []
+    post:
+      summary: " (store)"
+      description: "\n\n _C:\\Users\\Julien\\Documents\\CNAM\\ERP\\Projet\\back\\config/../app/../app/controllers/clients_controller.ts_ - **store**"
+      parameters: []
+      tags:
+        - "CLIENTS"
+      responses:
+        201:
+          description: "Created"
+          content:
+            application/json: {}
+      security: []
+      requestBody:
+        content:
+          application/json: {}
+  /api/clients/search:
+    get:
+      summary: " (search)"
+      description: "\n\n _C:\\Users\\Julien\\Documents\\CNAM\\ERP\\Projet\\back\\config/../app/../app/controllers/clients_controller.ts_ - **search**"
+      parameters: []
+      tags:
+        - "CLIENTS"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json: {}
+      security: []
+  /api/clients/{id}:
+    get:
+      summary: "Get a single instance of clients (show)"
+      description: "\n\n _C:\\Users\\Julien\\Documents\\CNAM\\ERP\\Projet\\back\\config/../app/../app/controllers/clients_controller.ts_ - **show**"
+      parameters:
+        - in: "path"
+          name: "id"
+          schema:
+            type: "string"
+          required: true
+      tags:
+        - "CLIENTS"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json: {}
+      security: []
+    delete:
+      summary: "Delete clients (destroy)"
+      description: "\n\n _C:\\Users\\Julien\\Documents\\CNAM\\ERP\\Projet\\back\\config/../app/../app/controllers/clients_controller.ts_ - **destroy**"
+      parameters:
+        - in: "path"
+          name: "id"
+          schema:
+            type: "string"
+          required: true
+      tags:
+        - "CLIENTS"
+      responses:
+        202:
+          description: "Accepted"
+          content:
+            application/json: {}
+      security: []
+  /api/suppliers:
+    get:
+      summary: "Get a list of suppliers (index)"
+      description: "\n\n _C:\\Users\\Julien\\Documents\\CNAM\\ERP\\Projet\\back\\config/../app/../app/controllers/suppliers_controller.ts_ - **index**"
+      parameters: []
+      tags:
+        - "SUPPLIERS"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json: {}
+      security: []
+    post:
+      summary: " (store)"
+      description: "\n\n _C:\\Users\\Julien\\Documents\\CNAM\\ERP\\Projet\\back\\config/../app/../app/controllers/suppliers_controller.ts_ - **store**"
+      parameters: []
+      tags:
+        - "SUPPLIERS"
+      responses:
+        201:
+          description: "Created"
+          content:
+            application/json: {}
+      security: []
+      requestBody:
+        content:
+          application/json: {}
+  /api/suppliers/search:
+    get:
+      summary: " (search)"
+      description: "\n\n _C:\\Users\\Julien\\Documents\\CNAM\\ERP\\Projet\\back\\config/../app/../app/controllers/suppliers_controller.ts_ - **search**"
+      parameters: []
+      tags:
+        - "SUPPLIERS"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json: {}
+      security: []
+  /api/suppliers/{id}:
+    get:
+      summary: "Get a single instance of suppliers (show)"
+      description: "\n\n _C:\\Users\\Julien\\Documents\\CNAM\\ERP\\Projet\\back\\config/../app/../app/controllers/suppliers_controller.ts_ - **show**"
+      parameters:
+        - in: "path"
+          name: "id"
+          schema:
+            type: "string"
+          required: true
+      tags:
+        - "SUPPLIERS"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json: {}
+      security: []
+    delete:
+      summary: "Delete suppliers (destroy)"
+      description: "\n\n _C:\\Users\\Julien\\Documents\\CNAM\\ERP\\Projet\\back\\config/../app/../app/controllers/suppliers_controller.ts_ - **destroy**"
+      parameters:
+        - in: "path"
+          name: "id"
+          schema:
+            type: "string"
+          required: true
+      tags:
+        - "SUPPLIERS"
+      responses:
+        202:
+          description: "Accepted"
+          content:
+            application/json: {}
+      security: []
+  /api/opportunities:
+    get:
+      summary: "Get a list of opportunities (index)"
+      description: "\n\n _C:\\Users\\Julien\\Documents\\CNAM\\ERP\\Projet\\back\\config/../app/../app/controllers/opportunities_controller.ts_ - **index**"
+      parameters: []
+      tags:
+        - "OPPORTUNITIES"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json: {}
+      security: []
+    post:
+      summary: " (store)"
+      description: "\n\n _C:\\Users\\Julien\\Documents\\CNAM\\ERP\\Projet\\back\\config/../app/../app/controllers/opportunities_controller.ts_ - **store**"
+      parameters: []
+      tags:
+        - "OPPORTUNITIES"
+      responses:
+        201:
+          description: "Created"
+          content:
+            application/json: {}
+      security: []
+      requestBody:
+        content:
+          application/json: {}
+  /api/opportunities/quote/{id}:
+    post:
+      summary: " (quote)"
+      description: "\n\n _C:\\Users\\Julien\\Documents\\CNAM\\ERP\\Projet\\back\\config/../app/../app/controllers/opportunities_controller.ts_ - **quote**"
+      parameters:
+        - in: "path"
+          name: "id"
+          schema:
+            type: "string"
+          required: true
+      tags:
+        - "OPPORTUNITIES"
+      responses:
+        201:
+          description: "Created"
+          content:
+            application/json: {}
+      security: []
+      requestBody:
+        content:
+          application/json: {}
+  /api/opportunities/{id}:
+    get:
+      summary: "Get a single instance of opportunities (show)"
+      description: "\n\n _C:\\Users\\Julien\\Documents\\CNAM\\ERP\\Projet\\back\\config/../app/../app/controllers/opportunities_controller.ts_ - **show**"
+      parameters:
+        - in: "path"
+          name: "id"
+          schema:
+            type: "string"
+          required: true
+      tags:
+        - "OPPORTUNITIES"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json: {}
+      security: []
+    put:
+      summary: "Update opportunities (update)"
+      description: "\n\n _C:\\Users\\Julien\\Documents\\CNAM\\ERP\\Projet\\back\\config/../app/../app/controllers/opportunities_controller.ts_ - **update**"
+      parameters:
+        - in: "path"
+          name: "id"
+          schema:
+            type: "string"
+          required: true
+      tags:
+        - "OPPORTUNITIES"
+      responses:
+        204:
+          description: "No Content"
+          content:
+            application/json: {}
+      security: []
+      requestBody:
+        content:
+          application/json: {}
+    delete:
+      summary: "Delete opportunities (destroy)"
+      description: "\n\n _C:\\Users\\Julien\\Documents\\CNAM\\ERP\\Projet\\back\\config/../app/../app/controllers/opportunities_controller.ts_ - **destroy**"
+      parameters:
+        - in: "path"
+          name: "id"
+          schema:
+            type: "string"
+          required: true
+      tags:
+        - "OPPORTUNITIES"
+      responses:
+        202:
+          description: "Accepted"
+          content:
+            application/json: {}
+      security: []
+  /api/quotes:
+    get:
+      summary: "Get a list of quotes (index)"
+      description: "\n\n _C:\\Users\\Julien\\Documents\\CNAM\\ERP\\Projet\\back\\config/../app/../app/controllers/quotes_controller.ts_ - **index**"
+      parameters: []
+      tags:
+        - "QUOTES"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json: {}
+      security: []
+    post:
+      summary: " (store)"
+      description: "\n\n _C:\\Users\\Julien\\Documents\\CNAM\\ERP\\Projet\\back\\config/../app/../app/controllers/quotes_controller.ts_ - **store**"
+      parameters: []
+      tags:
+        - "QUOTES"
+      responses:
+        201:
+          description: "Created"
+          content:
+            application/json: {}
+      security: []
+      requestBody:
+        content:
+          application/json: {}
+  /api/quotes/order/{id}:
+    post:
+      summary: " (order)"
+      description: "\n\n _C:\\Users\\Julien\\Documents\\CNAM\\ERP\\Projet\\back\\config/../app/../app/controllers/quotes_controller.ts_ - **order**"
+      parameters:
+        - in: "path"
+          name: "id"
+          schema:
+            type: "string"
+          required: true
+      tags:
+        - "QUOTES"
+      responses:
+        201:
+          description: "Created"
+          content:
+            application/json: {}
+      security: []
+      requestBody:
+        content:
+          application/json: {}
+  /api/quotes/{id}:
+    get:
+      summary: "Get a single instance of quotes (show)"
+      description: "\n\n _C:\\Users\\Julien\\Documents\\CNAM\\ERP\\Projet\\back\\config/../app/../app/controllers/quotes_controller.ts_ - **show**"
+      parameters:
+        - in: "path"
+          name: "id"
+          schema:
+            type: "string"
+          required: true
+      tags:
+        - "QUOTES"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json: {}
+      security: []
+    put:
+      summary: "Update quotes (update)"
+      description: "\n\n _C:\\Users\\Julien\\Documents\\CNAM\\ERP\\Projet\\back\\config/../app/../app/controllers/quotes_controller.ts_ - **update**"
+      parameters:
+        - in: "path"
+          name: "id"
+          schema:
+            type: "string"
+          required: true
+      tags:
+        - "QUOTES"
+      responses:
+        204:
+          description: "No Content"
+          content:
+            application/json: {}
+      security: []
+      requestBody:
+        content:
+          application/json: {}
+    delete:
+      summary: "Delete quotes (destroy)"
+      description: "\n\n _C:\\Users\\Julien\\Documents\\CNAM\\ERP\\Projet\\back\\config/../app/../app/controllers/quotes_controller.ts_ - **destroy**"
+      parameters:
+        - in: "path"
+          name: "id"
+          schema:
+            type: "string"
+          required: true
+      tags:
+        - "QUOTES"
+      responses:
+        202:
+          description: "Accepted"
+          content:
+            application/json: {}
+      security: []
+  /api/products:
+    get:
+      summary: "Get a list of products (index)"
+      description: "\n\n _C:\\Users\\Julien\\Documents\\CNAM\\ERP\\Projet\\back\\config/../app/../app/controllers/products_controller.ts_ - **index**"
+      parameters: []
+      tags:
+        - "PRODUCTS"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json: {}
+      security: []
+    post:
+      summary: " (store)"
+      description: "\n\n _C:\\Users\\Julien\\Documents\\CNAM\\ERP\\Projet\\back\\config/../app/../app/controllers/products_controller.ts_ - **store**"
+      parameters: []
+      tags:
+        - "PRODUCTS"
+      responses:
+        201:
+          description: "Created"
+          content:
+            application/json: {}
+      security: []
+      requestBody:
+        content:
+          application/json: {}
+  /api/products/search:
+    get:
+      summary: " (search)"
+      description: "\n\n _C:\\Users\\Julien\\Documents\\CNAM\\ERP\\Projet\\back\\config/../app/../app/controllers/products_controller.ts_ - **search**"
+      parameters: []
+      tags:
+        - "PRODUCTS"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json: {}
+      security: []
+  /api/products/{id}:
+    get:
+      summary: "Get a single instance of products (show)"
+      description: "\n\n _C:\\Users\\Julien\\Documents\\CNAM\\ERP\\Projet\\back\\config/../app/../app/controllers/products_controller.ts_ - **show**"
+      parameters:
+        - in: "path"
+          name: "id"
+          schema:
+            type: "string"
+          required: true
+      tags:
+        - "PRODUCTS"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json: {}
+      security: []
+    put:
+      summary: "Update products (update)"
+      description: "\n\n _C:\\Users\\Julien\\Documents\\CNAM\\ERP\\Projet\\back\\config/../app/../app/controllers/products_controller.ts_ - **update**"
+      parameters:
+        - in: "path"
+          name: "id"
+          schema:
+            type: "string"
+          required: true
+      tags:
+        - "PRODUCTS"
+      responses:
+        204:
+          description: "No Content"
+          content:
+            application/json: {}
+      security: []
+      requestBody:
+        content:
+          application/json: {}
+    delete:
+      summary: "Delete products (destroy)"
+      description: "\n\n _C:\\Users\\Julien\\Documents\\CNAM\\ERP\\Projet\\back\\config/../app/../app/controllers/products_controller.ts_ - **destroy**"
+      parameters:
+        - in: "path"
+          name: "id"
+          schema:
+            type: "string"
+          required: true
+      tags:
+        - "PRODUCTS"
+      responses:
+        202:
+          description: "Accepted"
+          content:
+            application/json: {}
+      security: []
+  /api/orders:
+    get:
+      summary: "Get a list of orders (index)"
+      description: "\n\n _C:\\Users\\Julien\\Documents\\CNAM\\ERP\\Projet\\back\\config/../app/../app/controllers/orders_controller.ts_ - **index**"
+      parameters: []
+      tags:
+        - "ORDERS"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json: {}
+      security: []
+    post:
+      summary: " (store)"
+      description: "\n\n _C:\\Users\\Julien\\Documents\\CNAM\\ERP\\Projet\\back\\config/../app/../app/controllers/orders_controller.ts_ - **store**"
+      parameters: []
+      tags:
+        - "ORDERS"
+      responses:
+        201:
+          description: "Created"
+          content:
+            application/json: {}
+      security: []
+      requestBody:
+        content:
+          application/json: {}
+  /api/orders/{id}:
+    get:
+      summary: "Get a single instance of orders (show)"
+      description: "\n\n _C:\\Users\\Julien\\Documents\\CNAM\\ERP\\Projet\\back\\config/../app/../app/controllers/orders_controller.ts_ - **show**"
+      parameters:
+        - in: "path"
+          name: "id"
+          schema:
+            type: "string"
+          required: true
+      tags:
+        - "ORDERS"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json: {}
+      security: []
+    put:
+      summary: "Update orders (update)"
+      description: "\n\n _C:\\Users\\Julien\\Documents\\CNAM\\ERP\\Projet\\back\\config/../app/../app/controllers/orders_controller.ts_ - **update**"
+      parameters:
+        - in: "path"
+          name: "id"
+          schema:
+            type: "string"
+          required: true
+      tags:
+        - "ORDERS"
+      responses:
+        204:
+          description: "No Content"
+          content:
+            application/json: {}
+      security: []
+      requestBody:
+        content:
+          application/json: {}
+    delete:
+      summary: "Delete orders (destroy)"
+      description: "\n\n _C:\\Users\\Julien\\Documents\\CNAM\\ERP\\Projet\\back\\config/../app/../app/controllers/orders_controller.ts_ - **destroy**"
+      parameters:
+        - in: "path"
+          name: "id"
+          schema:
+            type: "string"
+          required: true
+      tags:
+        - "ORDERS"
+      responses:
+        202:
+          description: "Accepted"
+          content:
+            application/json: {}
+      security: []
+  /api/price-requests:
+    get:
+      summary: "Get a list of price-requests (index)"
+      description: "\n\n _C:\\Users\\Julien\\Documents\\CNAM\\ERP\\Projet\\back\\config/../app/../app/controllers/price_requests_controller.ts_ - **index**"
+      parameters: []
+      tags:
+        - "PRICE-REQUESTS"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json: {}
+      security: []
+    post:
+      summary: " (store)"
+      description: "\n\n _C:\\Users\\Julien\\Documents\\CNAM\\ERP\\Projet\\back\\config/../app/../app/controllers/price_requests_controller.ts_ - **store**"
+      parameters: []
+      tags:
+        - "PRICE-REQUESTS"
+      responses:
+        201:
+          description: "Created"
+          content:
+            application/json: {}
+      security: []
+      requestBody:
+        content:
+          application/json: {}
+  /api/price-requests/{id}:
+    get:
+      summary: "Get a single instance of price-requests (show)"
+      description: "\n\n _C:\\Users\\Julien\\Documents\\CNAM\\ERP\\Projet\\back\\config/../app/../app/controllers/price_requests_controller.ts_ - **show**"
+      parameters:
+        - in: "path"
+          name: "id"
+          schema:
+            type: "string"
+          required: true
+      tags:
+        - "PRICE-REQUESTS"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json: {}
+      security: []
+    put:
+      summary: "Update price-requests (update)"
+      description: "\n\n _C:\\Users\\Julien\\Documents\\CNAM\\ERP\\Projet\\back\\config/../app/../app/controllers/price_requests_controller.ts_ - **update**"
+      parameters:
+        - in: "path"
+          name: "id"
+          schema:
+            type: "string"
+          required: true
+      tags:
+        - "PRICE-REQUESTS"
+      responses:
+        204:
+          description: "No Content"
+          content:
+            application/json: {}
+      security: []
+      requestBody:
+        content:
+          application/json: {}
+    delete:
+      summary: "Delete price-requests (destroy)"
+      description: "\n\n _C:\\Users\\Julien\\Documents\\CNAM\\ERP\\Projet\\back\\config/../app/../app/controllers/price_requests_controller.ts_ - **destroy**"
+      parameters:
+        - in: "path"
+          name: "id"
+          schema:
+            type: "string"
+          required: true
+      tags:
+        - "PRICE-REQUESTS"
+      responses:
+        202:
+          description: "Accepted"
+          content:
+            application/json: {}
+      security: []
+  /api/purchase-orders:
+    get:
+      summary: "Get a list of purchase-orders (index)"
+      description: "\n\n _C:\\Users\\Julien\\Documents\\CNAM\\ERP\\Projet\\back\\config/../app/../app/controllers/purchase_orders_controller.ts_ - **index**"
+      parameters: []
+      tags:
+        - "PURCHASE-ORDERS"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json: {}
+      security: []
+    post:
+      summary: " (store)"
+      description: "\n\n _C:\\Users\\Julien\\Documents\\CNAM\\ERP\\Projet\\back\\config/../app/../app/controllers/purchase_orders_controller.ts_ - **store**"
+      parameters: []
+      tags:
+        - "PURCHASE-ORDERS"
+      responses:
+        201:
+          description: "Created"
+          content:
+            application/json: {}
+      security: []
+      requestBody:
+        content:
+          application/json: {}
+  /api/purchase-orders/{id}:
+    get:
+      summary: "Get a single instance of purchase-orders (show)"
+      description: "\n\n _C:\\Users\\Julien\\Documents\\CNAM\\ERP\\Projet\\back\\config/../app/../app/controllers/purchase_orders_controller.ts_ - **show**"
+      parameters:
+        - in: "path"
+          name: "id"
+          schema:
+            type: "string"
+          required: true
+      tags:
+        - "PURCHASE-ORDERS"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json: {}
+      security: []
+    put:
+      summary: "Update purchase-orders (update)"
+      description: "\n\n _C:\\Users\\Julien\\Documents\\CNAM\\ERP\\Projet\\back\\config/../app/../app/controllers/purchase_orders_controller.ts_ - **update**"
+      parameters:
+        - in: "path"
+          name: "id"
+          schema:
+            type: "string"
+          required: true
+      tags:
+        - "PURCHASE-ORDERS"
+      responses:
+        204:
+          description: "No Content"
+          content:
+            application/json: {}
+      security: []
+      requestBody:
+        content:
+          application/json: {}
+    delete:
+      summary: "Delete purchase-orders (destroy)"
+      description: "\n\n _C:\\Users\\Julien\\Documents\\CNAM\\ERP\\Projet\\back\\config/../app/../app/controllers/purchase_orders_controller.ts_ - **destroy**"
+      parameters:
+        - in: "path"
+          name: "id"
+          schema:
+            type: "string"
+          required: true
+      tags:
+        - "PURCHASE-ORDERS"
+      responses:
+        202:
+          description: "Accepted"
+          content:
+            application/json: {}
+      security: []
+  /api/supplier-payments:
+    get:
+      summary: "Get a list of supplier-payments (index)"
+      description: "\n\n _C:\\Users\\Julien\\Documents\\CNAM\\ERP\\Projet\\back\\config/../app/../app/controllers/supplier_payments_controller.ts_ - **index**"
+      parameters: []
+      tags:
+        - "SUPPLIER-PAYMENTS"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json: {}
+      security: []
+    post:
+      summary: " (store)"
+      description: "\n\n _C:\\Users\\Julien\\Documents\\CNAM\\ERP\\Projet\\back\\config/../app/../app/controllers/supplier_payments_controller.ts_ - **store**"
+      parameters: []
+      tags:
+        - "SUPPLIER-PAYMENTS"
+      responses:
+        201:
+          description: "Created"
+          content:
+            application/json: {}
+      security: []
+      requestBody:
+        content:
+          application/json: {}
+  /api/supplier-payments/{id}:
+    get:
+      summary: "Get a single instance of supplier-payments (show)"
+      description: "\n\n _C:\\Users\\Julien\\Documents\\CNAM\\ERP\\Projet\\back\\config/../app/../app/controllers/supplier_payments_controller.ts_ - **show**"
+      parameters:
+        - in: "path"
+          name: "id"
+          schema:
+            type: "string"
+          required: true
+      tags:
+        - "SUPPLIER-PAYMENTS"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json: {}
+      security: []
+    put:
+      summary: "Update supplier-payments (update)"
+      description: "\n\n _C:\\Users\\Julien\\Documents\\CNAM\\ERP\\Projet\\back\\config/../app/../app/controllers/supplier_payments_controller.ts_ - **update**"
+      parameters:
+        - in: "path"
+          name: "id"
+          schema:
+            type: "string"
+          required: true
+      tags:
+        - "SUPPLIER-PAYMENTS"
+      responses:
+        204:
+          description: "No Content"
+          content:
+            application/json: {}
+      security: []
+      requestBody:
+        content:
+          application/json: {}
+    delete:
+      summary: "Delete supplier-payments (destroy)"
+      description: "\n\n _C:\\Users\\Julien\\Documents\\CNAM\\ERP\\Projet\\back\\config/../app/../app/controllers/supplier_payments_controller.ts_ - **destroy**"
+      parameters:
+        - in: "path"
+          name: "id"
+          schema:
+            type: "string"
+          required: true
+      tags:
+        - "SUPPLIER-PAYMENTS"
+      responses:
+        202:
+          description: "Accepted"
+          content:
+            application/json: {}
+      security: []
+tags:
+  - name: "CLIENTS"
+    description: "Everything related to CLIENTS"
+  - name: "SUPPLIERS"
+    description: "Everything related to SUPPLIERS"
+  - name: "OPPORTUNITIES"
+    description: "Everything related to OPPORTUNITIES"
+  - name: "QUOTES"
+    description: "Everything related to QUOTES"
+  - name: "PRODUCTS"
+    description: "Everything related to PRODUCTS"
+  - name: "ORDERS"
+    description: "Everything related to ORDERS"
+  - name: "PRICE-REQUESTS"
+    description: "Everything related to PRICE-REQUESTS"
+  - name: "PURCHASE-ORDERS"
+    description: "Everything related to PURCHASE-ORDERS"
+  - name: "SUPPLIER-PAYMENTS"
+    description: "Everything related to SUPPLIER-PAYMENTS"
