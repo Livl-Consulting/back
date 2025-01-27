@@ -1,0 +1,1 @@
+export type ProductType = 'sale' | 'purchase' | 'both'
