@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column } from '@adonisjs/lucid/orm'
+import type { ProductType } from '../types/product_type.js'
 
 export default class Product extends BaseModel {
   @column({ isPrimary: true })
@@ -19,4 +20,7 @@ export default class Product extends BaseModel {
 
   @column()
   declare price: number
+
+  @column()
+  declare type: ProductType
 }
