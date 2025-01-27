@@ -17,6 +17,9 @@ COPY . .
 # Generate Swagger docs
 RUN node ace docs:generate
 
+# Move the generated swagger.yml to the build folder
+RUN cp swagger.yml build/
+
 # Build the application
 RUN npm run build
 
@@ -28,7 +31,6 @@ WORKDIR /app
 
 # Copy the built application from the build stage
 COPY --from=build /app/build ./build
-COPY --from=build /app/swagger.yml ./swagger.yml
 
 WORKDIR /app/build
 
