@@ -10,10 +10,11 @@
 import router from '@adonisjs/core/services/router'
 import AutoSwagger from 'adonis-autoswagger'
 import swagger from '#config/swagger'
-import SuppliersController from '#controllers/suppliers_controller'
-import PriceRequestsController from '#controllers/price_requests_controller'
-import PurchaseOrdersController from '../app/controllers/purchase_orders_controller.js'
-import SupplierPaymentsController from '../app/controllers/supplier_payments_controller.js'
+
+const SuppliersController = () => import('../app/controllers/suppliers_controller.js')
+const PriceRequestsController = () => import('../app/controllers/price_requests_controller.js')
+const PurchaseOrdersController = () => import('../app/controllers/purchase_orders_controller.js')
+const SupplierPaymentsController = () => import('../app/controllers/supplier_payments_controller.js')
 const OrdersController = () => import('../app/controllers/orders_controller.js')
 const QuotesController = () => import('../app/controllers/quotes_controller.js')
 const OpportunitiesController = () => import('../app/controllers/opportunities_controller.js')
