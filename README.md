@@ -27,7 +27,7 @@
 
 - The Swagger API documentation is disponible at the link `/docs` route.
 
-## Products
+### Products
 
 - You can create a product with a `POST` Request on the route `/api/products`
 ```json
@@ -39,7 +39,7 @@
 }
 ```
 
-## Clients & Suppliers 
+### Clients & Suppliers 
 
 - You can create a client/supplier with a `POST` Request on the route `/api/clients` or `/api/suppliers`
 
@@ -87,6 +87,10 @@ And when you get a client you have the following response :
 ```
 
 ## Sales flow
+
+### Generic backlog route
+
+- You can get all the opportunities, quotes and orders with a `GET` Request on the route `/api/sales-backlog`
 
 ### Opportunities
 

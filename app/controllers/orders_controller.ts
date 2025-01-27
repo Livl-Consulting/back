@@ -1,6 +1,7 @@
 import Order from '#models/order'
 import { createOrderValidator, findOrderParamsValidator } from '#validators/order'
 import type { HttpContext } from '@adonisjs/core/http'
+import Product from '../models/product.js'
 
 export default class OrdersController {
     public async index({}: HttpContext) {
@@ -18,6 +19,12 @@ export default class OrdersController {
             if (existingOrder) {
                 throw new Error('Order already exists')
             }
+        }
+
+        // Check if product type is 'sale'
+        const product = await Product.findOrFail(payload.productId)
+        if (product.type == 'purchase') {
+            throw new Error('You can only create opportunities for sale products')
         }
 
         const order = await Order.create(payload)

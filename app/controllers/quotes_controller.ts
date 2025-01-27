@@ -8,6 +8,7 @@ import {
   quoteValidator,
 } from '../validators/quote.js'
 import Order from '#models/order'
+import Product from '../models/product.js'
 
 export default class QuotesController {
   public async index({}: HttpContext) {
@@ -26,6 +27,12 @@ export default class QuotesController {
       if (existingQuote) {
         throw new Error('Quote already exists')
       }
+    }
+
+    // Check if product type is 'sale'
+    const product = await Product.findOrFail(payload.productId)
+    if (product.type == 'purchase') {
+        throw new Error('You can only create opportunities for sale products')
     }
 
     const quote = await Quote.create(payload)

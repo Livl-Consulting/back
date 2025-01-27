@@ -6,6 +6,7 @@ import {
   opportunityValidator,
 } from '../validators/opportunity.js'
 import Quote from '../models/quote.js'
+import Product from '../models/product.js'
 
 export default class OpportunityController {
   public async index({}: HttpContext) {
@@ -15,7 +16,15 @@ export default class OpportunityController {
 
   public async store({ request }: HttpContext) {
     const payload = await request.validateUsing(createOpportunityValidator)
+
+    // Check if product type is 'sale'
+    const product = await Product.findOrFail(payload.productId)
+    if (product.type == 'purchase') {
+      throw new Error('You can only create opportunities for sale products')
+    }
+
     const opportunity = await Opportunity.create(payload)
+
     const refreshedOpportunity = await opportunity.refresh()
     await refreshedOpportunity.load('client')
     await refreshedOpportunity.load('product')
