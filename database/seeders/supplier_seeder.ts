@@ -8,13 +8,13 @@ export default class SupplierSeeder extends BaseSeeder {
         firstName: 'Mica',
         lastName: 'Gelahsuen',
         companyName: 'Fournisseur ITIL',
-        email: 'mica.gelahsuen@itil.fr"',
+        email: 'mica.gelahsuen@itil.fr',
       },
       {
         firstName: 'Virginie',
         lastName: 'Eckbolsheim',
         companyName: 'Fournisseur UIMM',
-        email: 'virginie.ecbkbolsheiml@uimm.fr"',
+        email: 'virginie.ecbkbolsheiml@uimm.fr',
       },
     ])
   }
