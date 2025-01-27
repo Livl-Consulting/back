@@ -3,6 +3,7 @@ import { BaseModel, column, hasMany } from '@adonisjs/lucid/orm'
 import type { HasMany } from '@adonisjs/lucid/types/relations'
 import Opportunity from './opportunity.js'
 import Quote from './quote.js'
+import Order from './order.js'
 
 export default class Client extends BaseModel {
   @column({ isPrimary: true })
@@ -31,4 +32,7 @@ export default class Client extends BaseModel {
 
   @hasMany(() => Quote)
   declare quotes: HasMany<typeof Quote>
+
+  @hasMany(() => Order)
+  declare orders: HasMany<typeof Order>
 }

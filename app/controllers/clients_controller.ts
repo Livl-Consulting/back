@@ -8,7 +8,7 @@ import {
 
 export default class ClientsController {
   public async index({}: HttpContext) {
-    const clients = await Client.query().preload('opportunities').preload('quotes')
+    const clients = await Client.query().preload('opportunities').preload('quotes').preload('orders')
     return clients.map((client) => client.serialize())
   }
 
@@ -19,6 +19,8 @@ export default class ClientsController {
       .where('firstName', 'like', `%${data.query}%`)
       .orWhere('lastName', 'like', `%${data.query}%`)
       .preload('opportunities')
+      .preload('quotes')
+      .preload('orders')
       .exec()
   }
 
@@ -28,6 +30,8 @@ export default class ClientsController {
     const client = await Client.query()
       .where('id', data.params.id)
       .preload('opportunities')
+      .preload('quotes')
+      .preload('orders')
       .firstOrFail()
 
     return client
