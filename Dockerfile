@@ -17,11 +17,11 @@ COPY . .
 # Generate Swagger docs
 RUN node ace docs:generate
 
-# Move the generated swagger.yml to the build folder
-RUN cp swagger.yml build/
-
 # Build the application
 RUN npm run build
+
+# Move the generated swagger.yml to the build folder
+RUN cp swagger.yml build/
 
 # Production stage
 FROM node:23-alpine
