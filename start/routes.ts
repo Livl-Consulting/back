@@ -10,6 +10,7 @@
 import router from '@adonisjs/core/services/router'
 import AutoSwagger from 'adonis-autoswagger'
 import swagger from '#config/swagger'
+const OrdersController = () => import('../app/controllers/orders_controller.js')
 const QuotesController = () => import('../app/controllers/quotes_controller.js')
 const OpportunitiesController = () => import('../app/controllers/opportunities_controller.js')
 const ClientsController = () => import('../app/controllers/clients_controller.js')
@@ -40,6 +41,7 @@ router
   .group(() => {
     router.get('/', [QuotesController, 'index'])
     router.post('/', [QuotesController, 'store'])
+    router.post('/order/:id', [QuotesController, 'order'])
     router.get('/:id', [QuotesController, 'show'])
     router.put('/:id', [QuotesController, 'update'])
     router.delete('/:id', [QuotesController, 'destroy'])
@@ -56,6 +58,16 @@ router
     router.delete('/:id', [ProductsController, 'destroy'])
   })
   .prefix('/api/products')
+
+router
+  .group(() => {
+    router.get('/', [OrdersController, 'index'])
+    router.post('/', [OrdersController, 'store'])
+    router.get('/:id', [OrdersController, 'show'])
+    router.put('/:id', [OrdersController, 'update'])
+    router.delete('/:id', [OrdersController, 'destroy'])
+  })
+  .prefix('/api/orders')
 
 // returns swagger in YAML
 router.get('/swagger', async () => {

@@ -7,6 +7,7 @@ import {
   findQuoteParamsValidator,
   quoteValidator,
 } from '../validators/quote.js'
+import Order from '#models/order'
 
 export default class QuotesController {
   public async index({}: HttpContext) {
@@ -30,6 +31,33 @@ export default class QuotesController {
     const quote = await Quote.create(payload)
     const refreshedQuote = await quote.refresh()
     return refreshedQuote.serialize()
+  }
+
+  // make a quote become an Order
+  public async order({ request }: HttpContext) {
+    const data = await request.validateUsing(findQuoteParamsValidator)
+
+    const quote = await Quote.findOrFail(data.params.id)
+
+    // Check if Order with quoteId already exists
+    const existingOrder = await Order.findBy('quoteId', quote.id)
+    if (existingOrder) {
+      throw new Error('Order already exists')
+    }
+
+    const order = await Order.create({
+      quoteId: quote.id,
+      clientId: quote.clientId,
+      productId: quote.productId,
+      price: quote.price,
+      status: 'progress',
+    })
+
+    // Make this quote as "validated"
+    quote.status = 'validated'
+    await quote.save()
+
+    return order
   }
 
   public async show({ request }: HttpContext) {
