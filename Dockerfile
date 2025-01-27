@@ -14,6 +14,9 @@ RUN pnpm install
 # Copy the rest of the application code
 COPY . .
 
+# Generate Swagger docs
+RUN node ace docs:generate
+
 # Build the application
 RUN npm run build
 
@@ -25,6 +28,7 @@ WORKDIR /app
 
 # Copy the built application from the build stage
 COPY --from=build /app/build ./build
+COPY --from=build /app/swagger.yml ./swagger.yml
 
 WORKDIR /app/build
 
