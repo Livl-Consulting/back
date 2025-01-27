@@ -13,6 +13,7 @@ import swagger from '#config/swagger'
 import SuppliersController from '#controllers/suppliers_controller'
 import PriceRequestsController from '#controllers/price_requests_controller'
 import PurchaseOrdersController from '../app/controllers/purchase_orders_controller.js'
+import SupplierPaymentsController from '../app/controllers/supplier_payments_controller.js'
 const OrdersController = () => import('../app/controllers/orders_controller.js')
 const QuotesController = () => import('../app/controllers/quotes_controller.js')
 const OpportunitiesController = () => import('../app/controllers/opportunities_controller.js')
@@ -101,6 +102,16 @@ router
     router.delete('/:id', [PurchaseOrdersController, 'destroy'])
   })
   .prefix('/api/purchase-orders')
+
+router
+  .group(() => {
+    router.get('/', [SupplierPaymentsController, 'index'])
+    router.post('/', [SupplierPaymentsController, 'store'])
+    router.get('/:id', [SupplierPaymentsController, 'show'])
+    router.put('/:id', [SupplierPaymentsController, 'update'])
+    router.delete('/:id', [SupplierPaymentsController, 'destroy'])
+  })
+  .prefix('/api/supplier-payments')
 
 // returns swagger in YAML
 router.get('/swagger', async () => {

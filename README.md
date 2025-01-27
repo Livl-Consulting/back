@@ -52,6 +52,40 @@
 }
 ```
 
+When you get a supplier you have the following response :
+
+```json
+{
+    "id": 3,
+    "createdAt": "2025-01-27T20:08:26.543+00:00",
+    "updatedAt": "2025-01-27T20:08:26.543+00:00",
+    "firstName": "fournisseur3",
+    "lastName": "fournisseur3",
+    "companyName": null,
+    "email": "fournisseur3.last@gmail.com",
+    "priceRequests": [],
+    "supplierPayments": [],
+    "purchaseOrders": []
+}
+```
+
+And when you get a client you have the following response :
+
+```json
+{
+    "id": 3,
+    "createdAt": "2025-01-27T20:10:20.188+00:00",
+    "updatedAt": "2025-01-27T20:10:20.188+00:00",
+    "firstName": "firstName",
+    "lastName": "lastName",
+    "companyName": null,
+    "email": "firstsss.last2@gmail.com",
+    "quotes": [],
+    "opportunities": [],
+    "orders": []
+}
+```
+
 ## Sales flow
 
 ### Opportunities
@@ -172,3 +206,24 @@ You can make a purchase order with a `POST` Request on the route `/api/purchase-
 ```
 
 As before, when you GET a purchase order, for each product, you will have the column `meta` that contains the pivot table.
+
+> The total amount is calculated by the sum of the quantity multiplied by the unit price for each product.
+
+### Supplier payment
+
+After the purchase order, you can make a supplier payment with a `POST` Request on the route `/api/supplier-payments`. Select one supplier, a purchase order and its amount.
+
+```json
+{
+  "purchaseOrderId": 1,
+  "supplierId": 1,
+  "amount": 1, 
+  "paymentMethod": "bank_transfer", // 'cash' | 'check' | 'credit_card' | 'bank_transfer' | 'paypal' | 'other'
+  "notes": "Payment 2",
+  "paymentDate": "2025-01-27T17:09:47"
+}
+```
+
+> Be careful, you can make as many payments as you want for a purchase order, but the sum of all payments must be equal to the total amount of the purchase order. If one payment is greater than the total amount, it will return an error. 
+
+> A purchase order status is set to 'invoice' when the sum of all payments is equal to the total amount.

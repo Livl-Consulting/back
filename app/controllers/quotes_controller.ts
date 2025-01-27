@@ -39,6 +39,9 @@ export default class QuotesController {
 
     const quote = await Quote.findOrFail(data.params.id)
 
+    if(quote.status === 'cancelled')
+      throw new Error('You cannot create an order from a cancelled quote')
+
     // Check if Order with quoteId already exists
     const existingOrder = await Order.findBy('quoteId', quote.id)
     if (existingOrder) {
@@ -57,13 +60,13 @@ export default class QuotesController {
     quote.status = 'validated'
     await quote.save()
 
-    return order
+    return order.serialize()
   }
 
   public async show({ request }: HttpContext) {
     const data = await request.validateUsing(findQuoteParamsValidator)
 
-    return await Quote.query().where('id', data.params.id).preload('client').firstOrFail()
+    return (await Quote.query().where('id', data.params.id).preload('client').firstOrFail()).serialize()
   }
 
   public async update({ request }: HttpContext) {
@@ -88,7 +91,6 @@ export default class QuotesController {
 
     const quote = await Quote.findOrFail(data.params.id)
 
-    // Set the status to "cancelled" before deleting
     quote.status = 'cancelled'
     await quote.save()
 

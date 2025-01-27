@@ -7,7 +7,7 @@ interface ProductDetails {
   unit_price: number;
 }
 
-export default class extends BaseSeeder {
+export default class PurchaseOrderSeeder extends BaseSeeder {
   async run() {
     // Fetch existing products
     const products = await Product.query().where('type', 'both').orWhere('type', 'purchase').exec()

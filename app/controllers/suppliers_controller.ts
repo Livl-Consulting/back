@@ -4,7 +4,11 @@ import { createSupplierValidator, findSupplierParamsValidator, searchSupplierVal
 
 export default class SuppliersController {
   public async index({}: HttpContext) {
-    const Suppliers = await Supplier.all()
+    const Suppliers = await Supplier.query()
+      .preload('priceRequests')
+      .preload('purchaseOrders')
+      .preload('supplierPayments')
+
     return Suppliers.map((supplier) => supplier.serialize())
   }
 
@@ -14,6 +18,9 @@ export default class SuppliersController {
     return await Supplier.query()
       .where('firstName', 'like', `%${data.query}%`)
       .orWhere('lastName', 'like', `%${data.query}%`)
+      .preload('priceRequests')
+      .preload('purchaseOrders')
+      .preload('supplierPayments')
       .exec()
   }
 
@@ -22,16 +29,20 @@ export default class SuppliersController {
 
     const supplier = await Supplier.query()
       .where('id', data.params.id)
+      .preload('priceRequests')
+      .preload('purchaseOrders')
+      .preload('supplierPayments')
       .firstOrFail()
 
-    return supplier
+    return supplier.serialize()
   }
 
   public async store({ request }: HttpContext) {
     const payload = await request.validateUsing(createSupplierValidator)
 
     const supplier = await Supplier.create(payload)
-    return supplier
+    await supplier.refresh()
+    return supplier.serialize()
   }
 
   public async destroy({ request }: HttpContext) {

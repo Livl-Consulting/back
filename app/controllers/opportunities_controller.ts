@@ -17,6 +17,8 @@ export default class OpportunityController {
     const payload = await request.validateUsing(createOpportunityValidator)
     const opportunity = await Opportunity.create(payload)
     const refreshedOpportunity = await opportunity.refresh()
+    await refreshedOpportunity.load('client')
+    await refreshedOpportunity.load('product')
     return refreshedOpportunity.serialize()
   }
 
@@ -25,6 +27,9 @@ export default class OpportunityController {
     const data = await request.validateUsing(findOpportunityParamsValidator)
 
     const opportunity = await Opportunity.findOrFail(data.params.id)
+
+    if(opportunity.status === 'cancelled')
+      throw new Error('You cannot create a quote from a cancelled opportunity')
 
     // Check if Quote with opportunityId already exists
     const existingQuote = await Quote.findBy('opportunityId', opportunity.id)
@@ -45,13 +50,13 @@ export default class OpportunityController {
     opportunity.status = 'validated'
     await opportunity.save()
 
-    return quote
+    return quote.serialize()
   }
 
   public async show({ request }: HttpContext) {
     const data = await request.validateUsing(findOpportunityParamsValidator)
 
-    return await Opportunity.query().where('id', data.params.id).preload('client').firstOrFail()
+    return (await Opportunity.query().where('id', data.params.id).preload('client').firstOrFail()).serialize()
   }
 
   public async update({ request }: HttpContext) {
@@ -67,7 +72,7 @@ export default class OpportunityController {
     opportunity.merge(payload)
     await opportunity.save()
 
-    return opportunity
+    return opportunity.serialize()
   }
 
   public async destroy({ request }: HttpContext) {

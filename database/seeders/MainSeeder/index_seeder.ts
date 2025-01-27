@@ -14,5 +14,6 @@ export default class extends BaseSeeder {
     await this.runSeeder(await import('../supplier_seeder.js'))
     await this.runSeeder(await import('../price_request_seeder.js'))
     await this.runSeeder(await import('../purchase_order_seeder.js'))
+    await this.runSeeder(await import('../supplier_payment_seeder.js'))
   }
 }

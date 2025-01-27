@@ -1,9 +1,10 @@
 import { DateTime } from 'luxon'
-import { BaseModel, belongsTo, column, manyToMany } from '@adonisjs/lucid/orm'
+import { BaseModel, belongsTo, column, hasMany, manyToMany } from '@adonisjs/lucid/orm'
 import Supplier from './supplier.js'
-import type { BelongsTo, ManyToMany } from '@adonisjs/lucid/types/relations'
+import type { BelongsTo, HasMany, ManyToMany } from '@adonisjs/lucid/types/relations'
 import type { PurchaseOrderStatus } from '../types/purchase_order_status.js'
 import Product from './product.js'
+import SupplierPayment from './supplier_payment.js'
 
 export default class PurchaseOrder extends BaseModel {
   @column({ isPrimary: true })
@@ -30,4 +31,7 @@ export default class PurchaseOrder extends BaseModel {
     pivotTimestamps: true,
   })
   declare products: ManyToMany<typeof Product>
+
+  @hasMany(() => SupplierPayment)
+  declare supplierPayments: HasMany<typeof SupplierPayment>
 }
