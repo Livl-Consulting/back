@@ -12,6 +12,7 @@ import AutoSwagger from 'adonis-autoswagger'
 import swagger from '#config/swagger'
 import SuppliersController from '#controllers/suppliers_controller'
 import PriceRequestsController from '#controllers/price_requests_controller'
+import PurchaseOrdersController from '../app/controllers/purchase_orders_controller.js'
 const OrdersController = () => import('../app/controllers/orders_controller.js')
 const QuotesController = () => import('../app/controllers/quotes_controller.js')
 const OpportunitiesController = () => import('../app/controllers/opportunities_controller.js')
@@ -90,6 +91,16 @@ router
     router.delete('/:id', [PriceRequestsController, 'destroy'])
   })
   .prefix('/api/price-requests')
+
+router
+  .group(() => {
+    router.get('/', [PurchaseOrdersController, 'index'])
+    router.post('/', [PurchaseOrdersController, 'store'])
+    router.get('/:id', [PurchaseOrdersController, 'show'])
+    router.put('/:id', [PurchaseOrdersController, 'update'])
+    router.delete('/:id', [PurchaseOrdersController, 'destroy'])
+  })
+  .prefix('/api/purchase-orders')
 
 // returns swagger in YAML
 router.get('/swagger', async () => {

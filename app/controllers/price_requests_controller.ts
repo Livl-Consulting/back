@@ -4,7 +4,7 @@ import {
   createPriceRequestValidator,
   updatePriceRequestValidator,
   findPriceRequestParamsValidator,
-} from '#validators/price-request'
+} from '../validators/price_request.js'
 import Product from '#models/product'
 
 export default class PriceRequestsController {
@@ -20,15 +20,16 @@ export default class PriceRequestsController {
 
     for (const product of payload.products) {
       const retrievedProduct = await Product.findOrFail(product.id)
-      
-      // Ensure the product type is either 'both' or 'purchase'
-      if (retrievedProduct.type === 'both' || retrievedProduct.type === 'purchase') {
-        productPayload[product.id] = { quantity: product.quantity, unit_price: product.unit_price }
+
+      if (retrievedProduct.type == 'sale') {
+        throw new Error('Product is not purchasable, product type must be "both" or "purchase"')
       }
+      
+      productPayload[product.id] = { quantity: product.quantity, unit_price: product.unit_price }
     }
 
     if (Object.keys(productPayload).length == 0) {
-        throw new Error('Products need to have the type "both" or "purchase" and not empty payload')
+        throw new Error('No valid products found')
     }
 
     const priceRequest = await PriceRequest.create({
@@ -39,7 +40,10 @@ export default class PriceRequestsController {
     // Attach valid products to the price request
     await priceRequest.related('products').attach(productPayload)
 
-    return priceRequest
+    await priceRequest.load('products')
+    await priceRequest.load('supplier')
+
+    return priceRequest.serialize()
   }
 
   public async update({ request }: HttpContext) {
@@ -52,30 +56,28 @@ export default class PriceRequestsController {
     await priceRequest.save()
     const refreshedPriceRequest = await priceRequest.refresh()
 
-    return refreshedPriceRequest
+    return refreshedPriceRequest.serialize()
   }
 
-  public async show({ request, response }: HttpContext) {
+  public async show({ request }: HttpContext) {
     const { params } = await request.validateUsing(findPriceRequestParamsValidator)
 
     const priceRequest = await PriceRequest.query()
       .where('id', params.id)
       .preload('supplier')
-      .preload('products', (productQuery) => {
-        productQuery.pivotColumns(['quantity', 'unit_price'])
-      })
+      .preload('products')
       .firstOrFail()
 
-    return response.json(priceRequest)
+    return priceRequest.serialize()
   }
 
     public async destroy({ request }: HttpContext) {
-        const data = await request.validateUsing(findPriceRequestParamsValidator)
-        const priceRequest = await PriceRequest.findOrFail(data.params.id)
-        
-        priceRequest.status = 'cancelled'
-        await priceRequest.save()
-    
-        return { message: 'Price Request set to cancelled' }
+      const data = await request.validateUsing(findPriceRequestParamsValidator)
+      const priceRequest = await PriceRequest.findOrFail(data.params.id)
+      
+      priceRequest.status = 'cancelled'
+      await priceRequest.save()
+  
+      return { message: 'Price Request set to cancelled' }
     }
 }

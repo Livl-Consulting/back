@@ -1,4 +1,5 @@
 import vine from "@vinejs/vine";
+import { SalesProcessStatus } from "../types/sale_process_status.js";
 
 export const createPriceRequestValidator = vine.compile(
     vine.object({
@@ -15,7 +16,7 @@ export const createPriceRequestValidator = vine.compile(
 
 export const updatePriceRequestValidator = vine.compile(
     vine.object({
-        status: vine.enum(['progress', 'validated', 'cancelled']), // Define allowed statuses
+        status: vine.enum(['progress', 'validated', 'cancelled'] satisfies SalesProcessStatus[]),
     })
 )
 

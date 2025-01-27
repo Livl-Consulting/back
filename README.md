@@ -106,7 +106,7 @@ Same as the previous ones, to make an order just give the quote id, the product 
 
 ## Purchase flow
 
-# Price request
+### Price request
 
 You can make a price request with a `POST` Request on the route `/api/price-requests`. Select one supplier (not client), and a product with a quantity and a unit price.
 
@@ -153,3 +153,22 @@ When you make a GET request on the route `/api/price-requests`, you will see a c
     ]
 }
 ```
+
+### Purchase order
+
+You can make a purchase order with a `POST` Request on the route `/api/purchase-orders`. Select one supplier (not client), and a product with a quantity and a unit price. It is the same as the price request
+
+```json
+{
+  "supplierId": 1,
+  "products": [
+    {
+      "id": 1,
+      "quantity": 10,
+      "unit_price": 2000
+    }
+  ]
+}
+```
+
+As before, when you GET a purchase order, for each product, you will have the column `meta` that contains the pivot table.

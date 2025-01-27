@@ -1,0 +1,1 @@
+export type PurchaseOrderStatus = 'progress' | 'received' | 'invoiced' | 'cancelled'
