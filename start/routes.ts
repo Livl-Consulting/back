@@ -10,6 +10,7 @@
 import router from '@adonisjs/core/services/router'
 import AutoSwagger from 'adonis-autoswagger'
 import swagger from '#config/swagger'
+import SuppliersController from '#controllers/suppliers_controller'
 const OrdersController = () => import('../app/controllers/orders_controller.js')
 const QuotesController = () => import('../app/controllers/quotes_controller.js')
 const OpportunitiesController = () => import('../app/controllers/opportunities_controller.js')
@@ -25,6 +26,16 @@ router
     router.delete('/:id', [ClientsController, 'destroy'])
   })
   .prefix('/api/clients')
+
+router
+  .group(() => {
+    router.get('/', [SuppliersController, 'index'])
+    router.post('/', [SuppliersController, 'store'])
+    router.get('/search', [SuppliersController, 'search'])
+    router.get('/:id', [SuppliersController, 'show'])
+    router.delete('/:id', [SuppliersController, 'destroy'])
+  })
+  .prefix('/api/suppliers')
 
 router
   .group(() => {
