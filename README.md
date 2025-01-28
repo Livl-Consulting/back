@@ -142,6 +142,10 @@ Same as the previous ones, to make an order just give the quote id, the product 
 }
 ```
 
+### PDF Order generation
+
+You can print a PDF of an order with a `GET` Request on the route `/api/orders/generate-pdf/:id/`. It will generate a PDF with the order details, with the client, the product, the total amount.
+
 ## Purchase flow
 
 ### Price request

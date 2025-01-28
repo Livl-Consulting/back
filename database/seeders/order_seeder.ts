@@ -9,7 +9,7 @@ export default class OrderSeeder extends BaseSeeder {
         quoteId: 1,
         clientId: 1,
         productId: 1,
-        price: 1000,
+        price: 100,
       },
     ])
   }

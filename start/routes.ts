@@ -85,6 +85,7 @@ router
   .group(() => {
     router.get('/', [OrdersController, 'index'])
     router.post('/', [OrdersController, 'store'])
+    router.get('/generate-pdf/:id', [OrdersController, 'generatePdf'])
     router.get('/:id', [OrdersController, 'show'])
     router.put('/:id', [OrdersController, 'update'])
     router.delete('/:id', [OrdersController, 'destroy'])

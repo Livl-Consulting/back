@@ -2,6 +2,7 @@ import Order from '#models/order'
 import { createOrderValidator, findOrderParamsValidator } from '#validators/order'
 import type { HttpContext } from '@adonisjs/core/http'
 import Product from '../models/product.js'
+import Puppeteer from 'puppeteer';
 
 export default class OrdersController {
     public async index({}: HttpContext) {
@@ -53,6 +54,44 @@ export default class OrdersController {
         await order.save()
 
         return order
+    }
+
+    public async generatePdf({ params, response, view }: HttpContext) {
+        try {
+            // Récupérer la commande avec le client et le produit associés
+            const order = await Order.query()
+                .where('id', params.id)
+                .preload('client')
+                .preload('product')
+                .firstOrFail();
+
+            // Générer le HTML en utilisant le template EdgeJS
+            const html = await view.render('order_confirmation', {
+                order,
+                client: order.client,
+                product: order.product,
+            });
+
+            // Lancer Puppeteer pour générer le PDF
+            const browser = await Puppeteer.launch();
+            const page = await browser.newPage();
+            await page.setContent(html, { waitUntil: 'networkidle0' });
+
+            // Générer le PDF
+            const pdfBuffer = await page.pdf({ format: 'A4', printBackground: true });
+
+            await browser.close();
+
+            const buffer = Buffer.isBuffer(pdfBuffer) ? pdfBuffer : Buffer.from(pdfBuffer);
+
+            // Envoyer le PDF en réponse
+            response.header('Content-Type', 'application/pdf');
+            response.header('Content-Disposition', `attachment; filename="confirmation_commande_${order.id}.pdf"`);
+            return response.send(buffer);
+        } catch (error) {
+            console.error('Erreur lors de la génération du PDF :', error);
+            return response.status(500).send('Une erreur est survenue lors de la génération du PDF.');
+        }
     }
 
     public async destroy({ request }: HttpContext) {
