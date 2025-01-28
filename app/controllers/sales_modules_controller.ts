@@ -27,6 +27,7 @@ export default class SalesModulesController {
         const salesData = [
         ...opportunities.map((opportunity) => ({
             type: 'Opportunity',
+            idType: opportunity.id,
             client: `${opportunity.client.firstName} ${opportunity.client.lastName} (${opportunity.client.companyName})`,
             product: opportunity.product.name,
             amount: opportunity.price,
@@ -36,6 +37,7 @@ export default class SalesModulesController {
         })),
         ...quotes.map((quote) => ({
             type: 'Quote',
+            idType: quote.id,
             client: `${quote.client.firstName} ${quote.client.lastName} (${quote.client.companyName})`,
             product: quote.product.name,
             amount: quote.price,
@@ -45,6 +47,7 @@ export default class SalesModulesController {
         })),
         ...orders.map((order) => ({
             type: 'Order',
+            idType: order.id,
             client: `${order.client.firstName} ${order.client.lastName} (${order.client.companyName})`,
             product: order.product.name,
             amount: order.price,
