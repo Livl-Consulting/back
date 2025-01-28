@@ -105,6 +105,7 @@ router
   .group(() => {
     router.get('/', [PurchaseOrdersController, 'index'])
     router.post('/', [PurchaseOrdersController, 'store'])
+    router.get('/generate-pdf/:id', [PurchaseOrdersController, 'generatePdf'])
     router.get('/:id', [PurchaseOrdersController, 'show'])
     router.put('/:id', [PurchaseOrdersController, 'update'])
     router.delete('/:id', [PurchaseOrdersController, 'destroy'])

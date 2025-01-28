@@ -231,3 +231,7 @@ After the purchase order, you can make a supplier payment with a `POST` Request 
 > Be careful, you can make as many payments as you want for a purchase order, but the sum of all payments must be equal to the total amount of the purchase order. If one payment is greater than the total amount, it will return an error. 
 
 > A purchase order status is set to 'invoice' when the sum of all payments is equal to the total amount.
+
+### PDF Order generation
+
+You can print a PDF of an order with a `GET` Request on the route `/api/purchase-orders/generate-pdf/:id/`. It will generate a PDF with the order details, with the supplier, the products, the total amount.

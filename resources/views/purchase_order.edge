@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Bon de Commande</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bon de Commande</h1>
+    <p><strong>Fournisseur :</strong> {{ supplier.firstName }} {{ supplier.lastName }} - {{  supplier.companyName }} </p>
+    <p><strong>Date :</strong> {{ purchaseOrder.createdAt.toFormat('dd LLLL yyyy') }}</p>
+    <p><strong>Status :</strong> {{ purchaseOrder.status }}</p>
+    <p><strong>Numéro de commande : </strong> {{purchaseOrder.id}} </p>
+    <h2>Produits</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Produit</th>
+                <th>Quantité</th>
+                <th>Prix Unitaire</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @each(product in products)
+                <tr>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.$extras.pivot_quantity }}</td>
+                    <td>{{ product.$extras.pivot_unit_price.toFixed(2) }} €</td>
+                    <td>{{ (product.$extras.pivot_quantity * product.$extras.pivot_unit_price).toFixed(2) }} €</td>
+                </tr>
+            @endeach
+        </tbody>
+    </table>
+    <h3>Total : {{ total.toFixed(2) }} €</h3>
+</body>
+</html>

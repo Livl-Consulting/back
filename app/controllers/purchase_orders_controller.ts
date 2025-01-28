@@ -2,6 +2,7 @@ import PurchaseOrder from '#models/purchase_order'
 import Product from '#models/product'
 import type { HttpContext } from '@adonisjs/core/http'
 import { createPurchaseOrderValidator, findPurchaseOrderParamsValidator, updatePurchaseOrderValidator } from '../validators/purchase_order.js'
+import Puppeteer from 'puppeteer';
 
 export default class PurchaseOrdersController {
   public async index({}: HttpContext) {
@@ -54,6 +55,52 @@ export default class PurchaseOrdersController {
       .firstOrFail()
 
     return purchaseOrder.serialize()
+  }
+
+  public async generatePdf({ params, response, view }: HttpContext) {
+    try {
+      const purchaseOrder = await PurchaseOrder.query()
+        .where('id', params.id)
+        .preload('supplier')
+        .preload('products')
+        .firstOrFail();
+  
+      const total = purchaseOrder.products.reduce((total, product) => {
+        return total + product.$extras.pivot_quantity * product.$extras.pivot_unit_price;
+      }, 0);
+  
+      const html = await view.render('purchase_order', {
+        purchaseOrder,
+        supplier: purchaseOrder.supplier,
+        products: purchaseOrder.products,
+        total,
+      });
+  
+      const browser = await Puppeteer.launch({
+        args: [
+          '--disable-web-security', // useless i think
+        ],
+      });
+
+      const page = await browser.newPage();
+      await page.setBypassCSP(true); // useless i think 
+  
+      await page.setContent(html, { waitUntil: 'networkidle0' });
+
+      const pdfBuffer = await page.pdf({ format: 'A4', printBackground: true, 
+        path: `bon_de_commande_achat.pdf` });
+
+      await browser.close();
+
+      const buffer = Buffer.isBuffer(pdfBuffer) ? pdfBuffer : Buffer.from(pdfBuffer);
+
+      response.header('Content-Type', 'application/pdf');
+      response.header('Content-Disposition', `attachment; filename="bon_de_commande_achat.pdf"`);
+      return response.send(buffer);
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+      return response.status(500).send('An error occurred while generating the PDF.');
+    }
   }
 
   public async destroy({ request }: HttpContext) {
