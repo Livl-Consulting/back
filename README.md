@@ -219,12 +219,12 @@ As before, when you GET a purchase order, for each product, you will have the co
 
 ### Supplier payment
 
-After the purchase order, you can make a supplier payment with a `POST` Request on the route `/api/supplier-payments`. Select one supplier, a purchase order and its amount.
+After the purchase order, you can make a supplier payment with a `POST` Request on the route `/api/supplier-payments`. Select one purchase order,the payment method and its amount.
 
 ```json
 {
   "purchaseOrderId": 1,
-  "supplierId": 1,
+  // "supplierId": 1, no need to set it, it will be set automatically because of the purchase order
   "amount": 1, 
   "paymentMethod": "bank_transfer", // 'cash' | 'check' | 'credit_card' | 'bank_transfer' | 'paypal' | 'other'
   "notes": "Payment 2",

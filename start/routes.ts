@@ -118,6 +118,7 @@ router
     router.get('/', [SupplierPaymentsController, 'index'])
     router.post('/', [SupplierPaymentsController, 'store'])
     router.get('/:id', [SupplierPaymentsController, 'show'])
+    router.get('/purchase-order/:id', [SupplierPaymentsController, 'showFromPurchaseOrder'])
     router.put('/:id', [SupplierPaymentsController, 'update'])
     router.delete('/:id', [SupplierPaymentsController, 'destroy'])
   })

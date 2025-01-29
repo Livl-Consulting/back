@@ -44,12 +44,12 @@ export default class SupplierPaymentsController {
 
     // Créer un paiement
     const payment = await SupplierPayment.create({
-        purchaseOrderId: payload.purchaseOrderId,
+        purchaseOrderId: purchaseOrder.id,
         amount: payload.amount,
         paymentMethod: payload.paymentMethod,
         notes: payload.notes,
         paymentDate: payload.paymentDate,
-        supplierId: payload.supplierId,
+        supplierId: purchaseOrder.supplierId,
       })
 
     // Vérification si le montant total payé correspond au montant total de la commande
@@ -75,6 +75,17 @@ export default class SupplierPaymentsController {
       .firstOrFail()
 
     return payment.serialize()
+  }
+
+  public async showFromPurchaseOrder({ request }: HttpContext) {
+    const data = await request.validateUsing(findSupplierPaymentParamsValidator)
+
+    const payments = await SupplierPayment.query()
+      .where('purchase_order_id', data.params.id)
+      .preload('purchaseOrder')
+      .exec()
+
+    return payments.map((payment) => payment.serialize())
   }
 
   // Update pour modifier un paiement existant

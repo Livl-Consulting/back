@@ -9,7 +9,6 @@ export const createSupplierPaymentValidator = vine.compile(
     paymentMethod: vine.enum(['bank_transfer', 'credit_card', 'cash', 'other', 'paypal', 'check'] satisfies PaymentMethod[]),
     notes: vine.string().optional(),
     paymentDate: vine.date().transform((date) => DateTime.fromJSDate(date)).optional(),
-    supplierId: vine.number().min(1),
   })
 )
 
