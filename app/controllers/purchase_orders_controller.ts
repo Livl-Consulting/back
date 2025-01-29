@@ -6,7 +6,7 @@ import Puppeteer from 'puppeteer';
 
 export default class PurchaseOrdersController {
   public async index({}: HttpContext) {
-    const purchaseOrders = await PurchaseOrder.query().preload('products')
+    const purchaseOrders = await PurchaseOrder.query().preload('products').preload('supplier')
     return purchaseOrders.map((order) => order.serialize())
   }
 
@@ -52,6 +52,7 @@ export default class PurchaseOrdersController {
     const purchaseOrder = await PurchaseOrder.query()
       .where('id', params.id)
       .preload('products')
+      .preload('supplier')
       .firstOrFail()
 
     return purchaseOrder.serialize()
@@ -95,7 +96,8 @@ export default class PurchaseOrdersController {
       const buffer = Buffer.isBuffer(pdfBuffer) ? pdfBuffer : Buffer.from(pdfBuffer);
 
       response.header('Content-Type', 'application/pdf');
-      response.header('Content-Disposition', `attachment; filename="bon_de_commande_achat.pdf"`);
+      response.header('Content-Disposition', `inline`); // to just display
+      // response.header('Content-Disposition', `attachment; filename="bon_de_commande_achat.pdf"`); // to download
       return response.send(buffer);
     } catch (error) {
       console.error('Error generating PDF:', error);

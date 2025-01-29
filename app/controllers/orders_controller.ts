@@ -86,7 +86,8 @@ export default class OrdersController {
 
             // Envoyer le PDF en réponse
             response.header('Content-Type', 'application/pdf');
-            response.header('Content-Disposition', `attachment; filename="confirmation_commande_${order.id}.pdf"`);
+            response.header('Content-Disposition', `inline`); // to just display
+            // response.header('Content-Disposition', `attachment; filename="confirmation_commande_${order.id}.pdf"`);// to download
             return response.send(buffer);
         } catch (error) {
             console.error('Erreur lors de la génération du PDF :', error);
