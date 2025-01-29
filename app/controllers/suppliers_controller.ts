@@ -16,8 +16,9 @@ export default class SuppliersController {
     const data = await request.validateUsing(searchSupplierValidator)
 
     return await Supplier.query()
-      .where('firstName', 'like', `%${data.query}%`)
-      .orWhere('lastName', 'like', `%${data.query}%`)
+      .whereILike('firstName', `%${data.query}%`)
+      .orWhereILike('lastName', `%${data.query}%`)
+      .orWhereILike('companyName', `%${data.query}%`)
       .preload('priceRequests')
       .preload('purchaseOrders')
       .preload('supplierPayments')

@@ -16,8 +16,9 @@ export default class ClientsController {
     const data = await request.validateUsing(searchClientValidator)
 
     return await Client.query()
-      .where('firstName', 'like', `%${data.query}%`)
-      .orWhere('lastName', 'like', `%${data.query}%`)
+      .whereILike('firstName', `%${data.query}%`)
+      .orWhereILike('lastName', `%${data.query}%`)
+      .orWhereILike('companyName', `%${data.query}%`)
       .preload('opportunities')
       .preload('quotes')
       .preload('orders')
