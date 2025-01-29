@@ -13,7 +13,7 @@ export default class ProductsController {
   public async search({ request }: HttpContext) {
     const data = await request.validateUsing(searchClientValidator)
 
-    return await Product.query().where('name', 'like', `%${data.query}%`).exec()
+    return await Product.query().whereILike('name', `%${data.query}%`).exec()
   }
 
   public async store({ request }: HttpContext) {
