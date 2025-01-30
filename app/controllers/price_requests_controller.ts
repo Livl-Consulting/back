@@ -6,6 +6,7 @@ import {
   findPriceRequestParamsValidator,
 } from '../validators/price_request.js'
 import Product from '#models/product'
+import PurchaseOrder from '../models/purchase_order.js'
 
 export default class PriceRequestsController {
   public async index({ }: HttpContext) {
@@ -44,6 +45,46 @@ export default class PriceRequestsController {
     await priceRequest.load('supplier')
 
     return priceRequest.serialize()
+  }
+
+  // Make a price request an order
+  public async order({ request }: HttpContext) {
+    const data = await request.validateUsing(findPriceRequestParamsValidator)
+
+    const priceRequest = await PriceRequest.findOrFail(data.params.id)
+
+    if(priceRequest.status === 'cancelled' || priceRequest.status === 'validated')
+      throw new Error('You cannot create an order from a cancelled or validated price request')
+
+    // Check if PurchaseOrder with priceRequestId already exists
+    const existingPurchaseOrder = await PurchaseOrder.findBy('priceRequestId', priceRequest.id)
+    if (existingPurchaseOrder) {
+      throw new Error('Purchase Order already exists')
+    }
+
+    const purchaseOrder = await PurchaseOrder.create({
+      supplierId: priceRequest.supplierId,
+      status: 'progress',
+      priceRequestId: priceRequest.id,
+    })
+
+    await priceRequest.load('products')
+
+    const productPayload: Record<number, { quantity: number; unit_price: number }> = {}
+    priceRequest.products.forEach((product) => {
+      productPayload[product.id] = { quantity: product.$extras.pivot_quantity, unit_price: product.$extras.pivot_unit_price }
+    })
+
+    await purchaseOrder.related('products').attach(productPayload)
+
+    // Make this price request as "validated"
+    priceRequest.status = 'validated'
+
+    await priceRequest.save()
+    await purchaseOrder.load('products')
+    await purchaseOrder.load('supplier')
+
+    return purchaseOrder.serialize()
   }
 
   public async update({ request }: HttpContext) {

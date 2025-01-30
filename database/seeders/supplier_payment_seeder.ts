@@ -21,9 +21,9 @@ export default class SupplierPaymentSeeder extends BaseSeeder {
       await SupplierPayment.create({
         supplierId: purchaseOrder.supplierId,
         purchaseOrderId: purchaseOrder.id,
-        amount: totalAmountToPay-1, // Assuming full payment - 1
+        amount: totalAmountToPay/2, // Assuming full payment - 50% of the total amount
         paymentMethod: 'bank_transfer', // Example payment method
-        notes: 'Payment for purchase order 1',
+        notes: 'Versement de 50% du montant total',
         paymentDate: DateTime.now(),
       })
     }

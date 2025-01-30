@@ -5,6 +5,7 @@ import type { BelongsTo, HasMany, ManyToMany } from '@adonisjs/lucid/types/relat
 import type { PurchaseOrderStatus } from '../types/purchase_order_status.js'
 import Product from './product.js'
 import SupplierPayment from './supplier_payment.js'
+import PriceRequest from './price_request.js'
 
 export default class PurchaseOrder extends BaseModel {
   @column({ isPrimary: true })
@@ -21,6 +22,12 @@ export default class PurchaseOrder extends BaseModel {
 
   @belongsTo(() => Supplier)
   declare supplier: BelongsTo<typeof Supplier>
+
+  @column()
+  declare priceRequestId?: number
+
+  @column()
+  declare priceRequest: BelongsTo<typeof PriceRequest>
 
   @column()
   declare status: PurchaseOrderStatus

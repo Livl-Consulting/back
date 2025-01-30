@@ -96,6 +96,7 @@ router
   .group(() => {
     router.get('/', [PriceRequestsController, 'index'])
     router.post('/', [PriceRequestsController, 'store'])
+    router.post('/order/:id', [PriceRequestsController, 'order'])
     router.get('/:id', [PriceRequestsController, 'show'])
     router.put('/:id', [PriceRequestsController, 'update'])
     router.delete('/:id', [PriceRequestsController, 'destroy'])

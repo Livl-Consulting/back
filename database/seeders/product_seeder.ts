@@ -6,19 +6,19 @@ export default class ProductSeeder extends BaseSeeder {
     await Product.createMany([
       {
         name: 'Project Management',
-        price: 100,
-        description: 'Product Gestion de Projet description',
+        price: 16000,
+        description: 'Gestion de projet en agilité',
         type: 'sale'
       },
       {
         name: 'Developpement Web',
-        price: 200,
-        description: 'Product 2 description',
+        price: 20000,
+        description: 'Angular / React / Vue.js',
         type: 'sale'
       },
       {
         name: 'Boite Noire - Airbus',
-        price: 300,
+        price: 30000,
         description: 'La boite noire de la chambre 6',
         type: 'purchase'
       },
