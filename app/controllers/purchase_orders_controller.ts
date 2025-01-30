@@ -78,7 +78,7 @@ export default class PurchaseOrdersController {
       });
   
       const browser = await Puppeteer.launch({
-        executablePath: '/root/.cache/puppeteer/chrome/linux-132.0.6834.110',
+        executablePath: Puppeteer.executablePath(),
         args: [
           '--no-sandbox', '--disable-setuid-sandbox', '--disable-web-security',
         ],
