@@ -28,4 +28,9 @@ export default await Env.create(new URL('../', import.meta.url), {
   DB_USER: Env.schema.string(),
   DB_PASSWORD: Env.schema.string.optional(),
   DB_DATABASE: Env.schema.string(),
+
+  // Meuch map parameters
+  KEPI_MIDDLEWARE_URL: Env.schema.string({ format: 'url' }),
+  API_URL: Env.schema.string({ format: 'url', tld: false }),
+  API_CODE: Env.schema.string(),
 })

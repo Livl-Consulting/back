@@ -21,6 +21,7 @@ const QuotesController = () => import('../app/controllers/quotes_controller.js')
 const OpportunitiesController = () => import('../app/controllers/opportunities_controller.js')
 const ClientsController = () => import('../app/controllers/clients_controller.js')
 const ProductsController = () => import('../app/controllers/products_controller.js')
+const MeuchController = () => import('../app/controllers/meuch_controller.js')
 
 router
   .group(() => {
@@ -124,6 +125,9 @@ router
     router.delete('/:id', [SupplierPaymentsController, 'destroy'])
   })
   .prefix('/api/supplier-payments')
+
+
+router.get('/meuch_map', [MeuchController, 'meuch'])
 
 // returns swagger in YAML
 router.get('/swagger', async () => {
