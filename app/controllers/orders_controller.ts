@@ -74,7 +74,7 @@ export default class OrdersController {
 
             // Lancer Puppeteer pour générer le PDF
             const browser = await Puppeteer.launch({
-                executablePath: '/usr/bin/google-chrome',
+                executablePath:  Puppeteer.executablePath(),
                 args: [
                   '--no-sandbox', '--disable-setuid-sandbox', '--disable-web-security',
                 ],
