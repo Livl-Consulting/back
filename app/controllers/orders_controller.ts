@@ -73,7 +73,13 @@ export default class OrdersController {
             });
 
             // Lancer Puppeteer pour générer le PDF
-            const browser = await Puppeteer.launch();
+            const browser = await Puppeteer.launch({
+                executablePath: '/usr/bin/google-chrome',
+                args: [
+                  '--no-sandbox', '--disable-setuid-sandbox', '--disable-web-security',
+                ],
+              });
+                          
             const page = await browser.newPage();
             await page.setContent(html, { waitUntil: 'networkidle0' });
 

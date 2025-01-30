@@ -79,7 +79,7 @@ export default class PurchaseOrdersController {
   
       const browser = await Puppeteer.launch({
         args: [
-          '--disable-web-security', // useless i think
+          '--no-sandbox', '--disable-setuid-sandbox', '--disable-web-security',
         ],
       });
 
