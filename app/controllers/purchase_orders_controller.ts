@@ -80,7 +80,7 @@ export default class PurchaseOrdersController {
       const browser = await Puppeteer.launch({
         executablePath: Puppeteer.executablePath(),
         args: [
-          '--no-sandbox', '--disable-setuid-sandbox', '--disable-web-security',
+          '--no-sandbox', '--disable-setuid-sandbox', '--disable-web-security', '--disable-gpu',
         ],
       });
 
