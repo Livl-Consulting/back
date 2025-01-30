@@ -6,7 +6,7 @@ export default class extends BaseSeeder {
     await Quote.createMany([
       {
         successProbability: 80,
-        status: 'progress',
+        status: 'validated',
         price: 15000,
         clientId: 1,
         productId: 1,

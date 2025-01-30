@@ -6,14 +6,14 @@ export default class extends BaseSeeder {
     await Opportunity.createMany([
       {
         successProbability: 80,
-        status: 'progress',
+        status: 'validated',
         price: 15000,
         clientId: 1,
         productId: 1,
       },
       {
         successProbability: 60,
-        status: 'validated',
+        status: 'progress',
         price: 20000,
         clientId: 1,
         productId: 2,
@@ -27,7 +27,7 @@ export default class extends BaseSeeder {
       },
       {
         successProbability: 70,
-        status: 'progress',
+        status: 'cancelled',
         price: 25000,
         clientId: 2,
         productId: 2,
