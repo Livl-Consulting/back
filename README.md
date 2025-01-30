@@ -196,6 +196,8 @@ When you make a GET request on the route `/api/price-requests`, you will see a c
 }
 ```
 
+- You can also create an order from the price request, just make a `POST` Request on the route `/api/price-requests/order/:id` with the id of the price request. It will create an order with the same values as the price request, except the status of the created order will be `progress` and the status of the price request will be `validated`. It will automatically create the order with all the products (quantity and price) of the price request.
+
 ### Purchase order
 
 You can make a purchase order with a `POST` Request on the route `/api/purchase-orders`. Select one supplier (not client), and a product with a quantity and a unit price. It is the same as the price request
