@@ -10,8 +10,8 @@
 import router from '@adonisjs/core/services/router'
 import AutoSwagger from 'adonis-autoswagger'
 import swagger from '#config/swagger'
-import ClientPaymentsController from '../app/controllers/client_payments_controller.js'
 
+const ClientPaymentsController = () => import('../app/controllers/client_payments_controller.js')
 const SalesModulesController = () => import('../app/controllers/sales_modules_controller.js')
 const SuppliersController = () => import('../app/controllers/suppliers_controller.js')
 const PriceRequestsController = () => import('../app/controllers/price_requests_controller.js')
