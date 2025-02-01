@@ -142,6 +142,21 @@ Same as the previous ones, to make an order just give the quote id, the product 
 }
 ```
 
+### Client payment
+
+After the order, you can make a client payment with a `POST` Request on the route `/api/client-payments`. Select one order, the payment method and its amount.
+
+```json
+{
+  "orderId": 1,
+  // "clientId": 1, no need to set it, it will be set automatically because of the order
+  "amount": 1, 
+  "paymentMethod": "bank_transfer", // 'cash' | 'check' | 'credit_card' | 'bank_transfer' | 'paypal' | 'other'
+  "notes": "Payment 2",
+  "paymentDate": "2025-01-27T17:09:47"
+}
+```
+
 ### PDF Order generation
 
 You can print a PDF of an order with a `GET` Request on the route `/api/orders/generate-pdf/:id/`. It will generate a PDF with the order details, with the client, the product, the total amount.

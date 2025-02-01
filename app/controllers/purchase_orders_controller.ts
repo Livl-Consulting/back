@@ -6,7 +6,7 @@ import Puppeteer from 'puppeteer';
 
 export default class PurchaseOrdersController {
   public async index({}: HttpContext) {
-    const purchaseOrders = await PurchaseOrder.query().preload('products').preload('supplier')
+    const purchaseOrders = await PurchaseOrder.query().preload('products').preload('supplier').preload('supplierPayments')
     return purchaseOrders.map((order) => order.serialize())
   }
 
@@ -53,6 +53,7 @@ export default class PurchaseOrdersController {
       .where('id', params.id)
       .preload('products')
       .preload('supplier')
+      .preload('supplierPayments')
       .firstOrFail()
 
     return purchaseOrder.serialize()
