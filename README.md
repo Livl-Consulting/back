@@ -3,7 +3,7 @@
 ## Installation
 
 - Clone the `Adonis.JS` API project
-- Run the command `npm i`
+- Run the command `pnpm i`
 - Copy and paste the keys from the `.env.example` in a new file `env` and change the values as you wish
 - Run the project in dev mode with `node ace serve`
 
