@@ -220,6 +220,7 @@ You can make a purchase order with a `POST` Request on the route `/api/purchase-
 ```json
 {
   "supplierId": 1,
+  "totalAmount": 20000, // Optional, will be calculated automatically
   "products": [
     {
       "id": 1,

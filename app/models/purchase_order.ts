@@ -24,6 +24,9 @@ export default class PurchaseOrder extends BaseModel {
   declare supplier: BelongsTo<typeof Supplier>
 
   @column()
+  declare totalAmount: number
+
+  @column()
   declare priceRequestId?: number
 
   @column()

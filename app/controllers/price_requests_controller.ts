@@ -62,19 +62,19 @@ export default class PriceRequestsController {
       throw new Error('Purchase Order already exists')
     }
 
-    const purchaseOrder = await PurchaseOrder.create({
-      supplierId: priceRequest.supplierId,
-      status: 'progress',
-      priceRequestId: priceRequest.id,
-    })
-
     await priceRequest.load('products')
-
     const productPayload: Record<number, { quantity: number; unit_price: number }> = {}
     priceRequest.products.forEach((product) => {
       productPayload[product.id] = { quantity: product.$extras.pivot_quantity, unit_price: product.$extras.pivot_unit_price }
     })
 
+    const purchaseOrder = await PurchaseOrder.create({
+      supplierId: priceRequest.supplierId,
+      status: 'progress',
+      priceRequestId: priceRequest.id,
+      totalAmount: priceRequest.products.reduce((acc, product) => acc + (product.$extras.pivot_unit_price * product.$extras.pivot_quantity), 0),
+    })
+    
     await purchaseOrder.related('products').attach(productPayload)
 
     // Make this price request as "validated"
