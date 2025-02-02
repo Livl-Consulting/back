@@ -16,7 +16,8 @@ const SalesModulesController = () => import('../app/controllers/sales_modules_co
 const SuppliersController = () => import('../app/controllers/suppliers_controller.js')
 const PriceRequestsController = () => import('../app/controllers/price_requests_controller.js')
 const PurchaseOrdersController = () => import('../app/controllers/purchase_orders_controller.js')
-const SupplierPaymentsController = () => import('../app/controllers/supplier_payments_controller.js')
+const SupplierPaymentsController = () =>
+  import('../app/controllers/supplier_payments_controller.js')
 const OrdersController = () => import('../app/controllers/orders_controller.js')
 const QuotesController = () => import('../app/controllers/quotes_controller.js')
 const OpportunitiesController = () => import('../app/controllers/opportunities_controller.js')
@@ -137,7 +138,6 @@ router
     router.delete('/:id', [SupplierPaymentsController, 'destroy'])
   })
   .prefix('/api/supplier-payments')
-
 
 router.get('/meuch_map', [MeuchController, 'meuch'])
 
