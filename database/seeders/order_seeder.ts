@@ -12,13 +12,12 @@ export default class OrderSeeder extends BaseSeeder {
         price: 15000,
       },
       {
-        status: 'invoiced',
+        status: 'progress',
         quoteId: 2,
         clientId: 2,
         productId: 2,
         price: 20000,
       },
-      
     ])
   }
 }

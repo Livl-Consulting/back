@@ -2,33 +2,60 @@ import { BaseSeeder } from '@adonisjs/lucid/seeders'
 import Product from '../../app/models/product.js'
 import PurchaseOrder from '../../app/models/purchase_order.js'
 
-interface ProductDetails {
-  quantity: number;
-  unit_price: number;
-}
-
 export default class PurchaseOrderSeeder extends BaseSeeder {
   async run() {
-    // Fetch existing products
-    const products = await Product.query().where('type', 'both').orWhere('type', 'purchase').exec()
+    //const productCashierMaterial = await Product.findBy('id', 8)
+    const productHosting = await Product.findBy('id', 3)
+    const productTester = await Product.findBy('id', 4)
 
-    // Write your database queries inside the run method
-    const purchaseQuantity = 2;
-    const purchaseOrder = await PurchaseOrder.create({
-      supplierId: 1,
-      status: 'received',
-      totalAmount: products.reduce((acc, product) => acc + (product.price * purchaseQuantity), 0),
-    })
+    //const supplierCashier = 1;
+    const supplierOVH = 2;
+    const supplierTester = 3;
 
-    const productPayload = products.reduce<Record<number, ProductDetails>>((acc, product) => {
-      acc[product.id] = {
-        quantity: purchaseQuantity,
-        unit_price: product.price,
-      };
-      return acc;
-    }, {});
+    // if (productCashierMaterial) {
+    //   await PurchaseOrder.create({
+    //     supplierId: supplierCashier,
+    //     status: 'received',
+    //     totalAmount: productCashierMaterial.price,
+    //   }).then(order => {
+    //     order.related('products').attach({
+    //       [productCashierMaterial.id]: {
+    //         quantity: 1,
+    //         unit_price: productCashierMaterial.price,
+    //       },
+    //     })
+    //   })
+    // }
 
-    // Ajoute des produits à la commande avec des données pivot
-    await purchaseOrder.related('products').attach(productPayload)
+    if (productHosting) {
+      await PurchaseOrder.create({
+        supplierId: supplierOVH,
+        status: 'progress',
+        totalAmount: productHosting.price,
+      }).then(order => {
+        order.related('products').attach({
+          [productHosting.id]: {
+            quantity: 3,
+            unit_price: productHosting.price,
+          },
+        })
+      })
+    }
+
+    if (productTester) {
+      const quantity = 25;
+      await PurchaseOrder.create({
+        supplierId: supplierTester,
+        status: 'received',
+        totalAmount: productTester.price * quantity,
+      }).then(order => {
+        order.related('products').attach({
+          [productTester.id]: {
+            quantity: quantity,
+            unit_price: productTester.price,
+          },
+        })
+      })
+    }
   }
 }

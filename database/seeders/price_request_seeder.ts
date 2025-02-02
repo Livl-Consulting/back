@@ -2,31 +2,28 @@ import PriceRequest from '#models/price_request'
 import Product from '#models/product'
 import { BaseSeeder } from '@adonisjs/lucid/seeders'
 
-interface ProductDetails {
-  quantity: number;
-  unit_price: number;
-}
-
 export default class PriceRequestSeeder extends BaseSeeder {
   async run() {
-    // Fetch existing products
-    const products = await Product.query().where('type', 'both').orWhere('type', 'purchase').exec()
+    const productCashierMaterial = await Product.findBy('id', 8)
+    const productCashierMaterial2 = await Product.findBy('id', 9)
+    const supplierCashier = 1; // Matériel de caisse LIDL
 
-    // Create a new PriceRequest
-    const priceRequest = await PriceRequest.create({
-      supplierId: 1, // Assuming you have a supplier with ID 1
-      status: 'progress'
-    })
+    if (productCashierMaterial && productCashierMaterial2) {
+      const priceRequest = await PriceRequest.create({
+        supplierId: supplierCashier,
+        status: 'progress'
+      })
 
-    // Attach products to the price request with pivot data
-    const productPayload = products.reduce<Record<number, ProductDetails>>((acc, product) => {
-      acc[product.id] = {
-        quantity: 10,
-        unit_price: product.price,
-      };
-      return acc;
-    }, {});
-
-    await priceRequest.related('products').attach(productPayload)
+      await priceRequest.related('products').attach({
+        [productCashierMaterial.id]: {
+          quantity: 5,
+          unit_price: productCashierMaterial.price,
+        },
+        [productCashierMaterial2.id]: {
+          quantity: 3,
+          unit_price: productCashierMaterial2.price,
+        }
+      })
+    }
   }
 }

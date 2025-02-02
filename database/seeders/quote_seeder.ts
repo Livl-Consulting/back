@@ -33,6 +33,20 @@ export default class extends BaseSeeder {
         clientId: 1,
         productId: 2,
       },
+      {
+        successProbability: 20,
+        status: 'progress',
+        price: 35000,
+        clientId: 3,
+        productId: 1,
+      },
+      {
+        successProbability: 40,
+        status: 'progress',
+        price: 55000,
+        clientId: 4,
+        productId: 1,
+      },
     ])
   }
 }

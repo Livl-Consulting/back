@@ -5,17 +5,23 @@ export default class SupplierSeeder extends BaseSeeder {
   async run() {
     await Supplier.createMany([
       {
-        firstName: 'Mica',
-        lastName: 'Gelahsuen',
-        companyName: 'Fournisseur ITIL',
-        email: 'mica.gelahsuen@itil.fr',
+        firstName: 'John Paul',
+        lastName: 'Scally',
+        companyName: 'Matériel de caisse LIDL',
+        email: 'john.paul@lidl.com'
       },
       {
-        firstName: 'Virginie',
-        lastName: 'Eckbolsheim',
-        companyName: 'Fournisseur UIMM',
-        email: 'virginie.ecbkbolsheiml@uimm.fr',
+        firstName: 'Octave',
+        lastName: 'Klaba',
+        companyName: 'OVH',
+        email: 'octave.klaba@ovh.com'
       },
+      {
+        firstName: 'Saidakhmed',
+        lastName: 'Kadyrov',
+        companyName: 'Tchétchénie Consulting',
+        email: 'saidakmed.kadyr@tchechenie.consulting.com'
+      }
     ])
   }
 }
