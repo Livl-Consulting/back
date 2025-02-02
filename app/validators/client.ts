@@ -1,6 +1,12 @@
 import vine from '@vinejs/vine'
 import { uniqueRule } from './rules/unique.js'
 
+export type CreateClientValidatorType = {
+  lastName: string
+  firstName: string
+  companyName?: string
+  email: string
+}
 export const createClientValidator = vine.compile(
   vine.object({
     lastName: vine.string().minLength(2),
