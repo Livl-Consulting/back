@@ -6,7 +6,7 @@ import Puppeteer from 'puppeteer';
 
 export default class OrdersController {
     public async index({}: HttpContext) {
-        const orders = await Order.query().preload('client').preload('product')
+        const orders = await Order.query().preload('client').preload('product').preload('clientPayments')
  
         return orders.map((order) => order.serialize())
     }
@@ -36,7 +36,13 @@ export default class OrdersController {
     public async show({ request }: HttpContext) {
         const data = await request.validateUsing(findOrderParamsValidator)
 
-        return await Order.query().where('id', data.params.id).preload('client').firstOrFail()
+        const order =  await Order.query().where('id', data.params.id)
+            .preload('client')
+            .preload('product')
+            .preload('clientPayments')
+            .firstOrFail()
+        
+        return order.serialize()
     }
 
     public async update({ request }: HttpContext) {
@@ -76,7 +82,7 @@ export default class OrdersController {
             const browser = await Puppeteer.launch({
                 executablePath:  Puppeteer.executablePath(),
                 args: [
-                  '--no-sandbox', '--disable-setuid-sandbox', '--disable-web-security',
+                  '--no-sandbox', '--disable-setuid-sandbox', '--disable-web-security', '--disable-gpu',
                 ],
               });
                           

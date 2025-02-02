@@ -1,10 +1,11 @@
 import { DateTime } from 'luxon'
-import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
+import { BaseModel, belongsTo, column, hasMany } from '@adonisjs/lucid/orm'
 import Client from './client.js'
-import type { BelongsTo } from '@adonisjs/lucid/types/relations'
+import type { BelongsTo, HasMany } from '@adonisjs/lucid/types/relations'
 import Product from './product.js'
 import Quote from './quote.js'
 import type { OrderStatus } from '../types/order_status.js'
+import ClientPayment from './client_payment.js'
 
 export default class Order extends BaseModel {
   @column({ isPrimary: true })
@@ -39,4 +40,7 @@ export default class Order extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime
+
+  @hasMany(() => ClientPayment)
+  declare clientPayments: HasMany<typeof ClientPayment>
 }

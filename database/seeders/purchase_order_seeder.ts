@@ -12,16 +12,17 @@ export default class PurchaseOrderSeeder extends BaseSeeder {
     // Fetch existing products
     const products = await Product.query().where('type', 'both').orWhere('type', 'purchase').exec()
 
-    
     // Write your database queries inside the run method
+    const purchaseQuantity = 2;
     const purchaseOrder = await PurchaseOrder.create({
       supplierId: 1,
       status: 'received',
+      totalAmount: products.reduce((acc, product) => acc + (product.price * purchaseQuantity), 0),
     })
 
     const productPayload = products.reduce<Record<number, ProductDetails>>((acc, product) => {
       acc[product.id] = {
-        quantity: 2,
+        quantity: purchaseQuantity,
         unit_price: product.price,
       };
       return acc;

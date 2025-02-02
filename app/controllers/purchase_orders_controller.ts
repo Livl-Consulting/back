@@ -6,7 +6,7 @@ import Puppeteer from 'puppeteer';
 
 export default class PurchaseOrdersController {
   public async index({}: HttpContext) {
-    const purchaseOrders = await PurchaseOrder.query().preload('products').preload('supplier')
+    const purchaseOrders = await PurchaseOrder.query().preload('products').preload('supplier').preload('supplierPayments')
     return purchaseOrders.map((order) => order.serialize())
   }
 
@@ -15,17 +15,20 @@ export default class PurchaseOrdersController {
 
     const productPayload: Record<number, { quantity: number; unit_price: number }> = {}
 
+    var totalAmount = 0
     for (const product of payload.products) {
       const retrievedProduct = await Product.findOrFail(product.id)
       if (retrievedProduct.type == 'sale') {
         throw new Error('Product is not purchasable, product type must be "both" or "purchase"')
       }
       productPayload[product.id] = { quantity: product.quantity, unit_price: product.unit_price }
+      totalAmount += product.quantity * product.unit_price
     }
 
     const purchaseOrder = await PurchaseOrder.create({
       supplierId: payload.supplierId,
       status: 'progress',
+      totalAmount: totalAmount,
     })
 
     await purchaseOrder.related('products').attach(productPayload)
@@ -53,6 +56,7 @@ export default class PurchaseOrdersController {
       .where('id', params.id)
       .preload('products')
       .preload('supplier')
+      .preload('supplierPayments')
       .firstOrFail()
 
     return purchaseOrder.serialize()
@@ -66,9 +70,10 @@ export default class PurchaseOrdersController {
         .preload('products')
         .firstOrFail();
   
-      const total = purchaseOrder.products.reduce((total, product) => {
-        return total + product.$extras.pivot_quantity * product.$extras.pivot_unit_price;
-      }, 0);
+      const total = purchaseOrder.totalAmount;
+      // const total = purchaseOrder.products.reduce((total, product) => {
+      //   return total + product.$extras.pivot_quantity * product.$extras.pivot_unit_price;
+      // }, 0);
   
       const html = await view.render('purchase_order', {
         purchaseOrder,
@@ -80,7 +85,7 @@ export default class PurchaseOrdersController {
       const browser = await Puppeteer.launch({
         executablePath: Puppeteer.executablePath(),
         args: [
-          '--no-sandbox', '--disable-setuid-sandbox', '--disable-web-security',
+          '--no-sandbox', '--disable-setuid-sandbox', '--disable-web-security', '--disable-gpu',
         ],
       });
 
