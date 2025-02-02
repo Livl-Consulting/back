@@ -13,6 +13,18 @@ import { createSupplierPaymentValidator } from '#validators/supplier_payment'
 export default class MeuchController {
   public async meuch(): Promise<MeuchEntry[]> {
     return [
+      // Sales backlog
+      {
+        key: `${env.get('API_CODE')}_SALES_BACKLOG`,
+        endpoint: `/api/sales-backlog`,
+        description: 'Récupère tout les opportunités en attente',
+        type: 'GET',
+        routeFormat: null,
+        queryParams: null,
+        body: null,
+        response: {},
+      },
+
       // Client
       {
         key: `${env.get('API_CODE')}_LIST_CLIENT`,
