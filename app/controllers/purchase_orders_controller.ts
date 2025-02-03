@@ -1,12 +1,19 @@
 import PurchaseOrder from '#models/purchase_order'
 import Product from '#models/product'
 import type { HttpContext } from '@adonisjs/core/http'
-import { createPurchaseOrderValidator, findPurchaseOrderParamsValidator, updatePurchaseOrderValidator } from '../validators/purchase_order.js'
-import Puppeteer from 'puppeteer';
+import {
+  createPurchaseOrderValidator,
+  findPurchaseOrderParamsValidator,
+  updatePurchaseOrderValidator,
+} from '../validators/purchase_order.js'
+import Puppeteer from 'puppeteer'
 
 export default class PurchaseOrdersController {
   public async index({}: HttpContext) {
-    const purchaseOrders = await PurchaseOrder.query().preload('products').preload('supplier').preload('supplierPayments')
+    const purchaseOrders = await PurchaseOrder.query()
+      .preload('products')
+      .preload('supplier')
+      .preload('supplierPayments')
     return purchaseOrders.map((order) => order.serialize())
   }
 
@@ -69,46 +76,52 @@ export default class PurchaseOrdersController {
         .where('id', params.id)
         .preload('supplier')
         .preload('products')
-        .firstOrFail();
-  
-      const total = purchaseOrder.totalAmount;
+        .firstOrFail()
+
+      const total = purchaseOrder.totalAmount
       // const total = purchaseOrder.products.reduce((total, product) => {
       //   return total + product.$extras.pivot_quantity * product.$extras.pivot_unit_price;
       // }, 0);
-  
+
       const html = await view.render('purchase_order', {
         purchaseOrder,
         supplier: purchaseOrder.supplier,
         products: purchaseOrder.products,
         total,
-      });
-  
+      })
+
       const browser = await Puppeteer.launch({
         executablePath: Puppeteer.executablePath(),
         args: [
-          '--no-sandbox', '--disable-setuid-sandbox', '--disable-web-security', '--disable-gpu',
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+          '--disable-web-security',
+          '--disable-gpu',
         ],
-      });
+      })
 
-      const page = await browser.newPage();
-      await page.setBypassCSP(true); // useless i think 
-  
-      await page.setContent(html, { waitUntil: 'networkidle0' });
+      const page = await browser.newPage()
+      await page.setBypassCSP(true) // useless i think
 
-      const pdfBuffer = await page.pdf({ format: 'A4', printBackground: true, 
-        path: `bon_de_commande_achat.pdf` });
+      await page.setContent(html, { waitUntil: 'networkidle0' })
 
-      await browser.close();
+      const pdfBuffer = await page.pdf({
+        format: 'A4',
+        printBackground: true,
+        path: `bon_de_commande_achat.pdf`,
+      })
 
-      const buffer = Buffer.isBuffer(pdfBuffer) ? pdfBuffer : Buffer.from(pdfBuffer);
+      await browser.close()
 
-      response.header('Content-Type', 'application/pdf');
-      response.header('Content-Disposition', `inline`); // to just display
+      const buffer = Buffer.isBuffer(pdfBuffer) ? pdfBuffer : Buffer.from(pdfBuffer)
+
+      response.header('Content-Type', 'application/pdf')
+      response.header('Content-Disposition', `inline`) // to just display
       // response.header('Content-Disposition', `attachment; filename="bon_de_commande_achat.pdf"`); // to download
-      return response.send(buffer);
+      return response.send(buffer)
     } catch (error) {
-      console.error('Error generating PDF:', error);
-      return response.status(500).send('An error occurred while generating the PDF.');
+      console.error('Error generating PDF:', error)
+      return response.status(500).send('An error occurred while generating the PDF.')
     }
   }
 
