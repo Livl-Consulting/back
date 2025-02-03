@@ -1,5 +1,5 @@
 import Order from '#models/order'
-import { createOrderValidator, findOrderParamsValidator } from '#validators/order'
+import { createOrderValidator, findOrderParamsValidator, updateOrderValidator } from '#validators/order'
 import type { HttpContext } from '@adonisjs/core/http'
 import Product from '../models/product.js'
 import Puppeteer from 'puppeteer';
@@ -49,17 +49,11 @@ export default class OrdersController {
         const data = await request.validateUsing(findOrderParamsValidator)
 
         const order = await Order.findOrFail(data.params.id)
-
-        if(order.status !== 'progress') {
-            throw new Error('You cannot update a validated or cancelled order')
-        }
-
-        const payload = await request.validateUsing(createOrderValidator)
-
+        const payload = await request.validateUsing(updateOrderValidator)
         order.merge(payload)
         await order.save()
 
-        return order
+        return order.serialize()
     }
 
     public async generatePdf({ params, response, view }: HttpContext) {

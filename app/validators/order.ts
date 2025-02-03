@@ -1,5 +1,6 @@
 import vine from '@vinejs/vine'
 import { DateTime } from 'luxon'
+import { OrderStatus } from '../types/order_status.js'
 
 export const createOrderValidator = vine.compile(
     vine.object({
@@ -16,5 +17,11 @@ export const findOrderParamsValidator = vine.compile(
         params: vine.object({
             id: vine.number()
         })
+    })
+)
+
+export const updateOrderValidator = vine.compile(
+    vine.object({
+        status: vine.enum(['progress', 'delivered', 'invoiced', 'cancelled'] satisfies OrderStatus[]),
     })
 )
