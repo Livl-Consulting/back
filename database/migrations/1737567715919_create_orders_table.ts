@@ -10,10 +10,11 @@ export default class extends BaseSchema {
       
       table.float('price').notNullable()
 
-      table.integer('quote_id').unsigned().notNullable().references(`quotes.id`)
+      table.integer('quote_id').unsigned().nullable().references(`quotes.id`)
       table.integer('client_id').unsigned().notNullable().references(`clients.id`)
       table.integer('product_id').unsigned().notNullable().references(`products.id`)
       table.enum('status', ['progress', 'delivered', 'cancelled', 'invoiced'] satisfies OrderStatus[]).defaultTo('progress')
+      table.dateTime('due_date').notNullable()
 
 
       table.timestamp('created_at')

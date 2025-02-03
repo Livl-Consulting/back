@@ -9,6 +9,7 @@ import {
 } from '../validators/quote.js'
 import Order from '#models/order'
 import Product from '../models/product.js'
+import { DateTime } from 'luxon'
 
 export default class QuotesController {
   public async index({}: HttpContext) {
@@ -61,6 +62,7 @@ export default class QuotesController {
       productId: quote.productId,
       price: quote.price,
       status: 'progress',
+      dueDate: DateTime.now().plus({ days: 31 }),
     })
 
     // Make this quote as "validated"

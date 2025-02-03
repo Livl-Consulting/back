@@ -7,6 +7,7 @@ import {
 } from '../validators/price_request.js'
 import Product from '#models/product'
 import PurchaseOrder from '../models/purchase_order.js'
+import { DateTime } from 'luxon'
 
 export default class PriceRequestsController {
   public async index({ }: HttpContext) {
@@ -73,6 +74,7 @@ export default class PriceRequestsController {
       status: 'progress',
       priceRequestId: priceRequest.id,
       totalAmount: priceRequest.products.reduce((acc, product) => acc + (product.$extras.pivot_unit_price * product.$extras.pivot_quantity), 0),
+      dueDate: DateTime.now().plus({ days: 31 }),
     })
     
     await purchaseOrder.related('products').attach(productPayload)

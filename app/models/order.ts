@@ -33,7 +33,10 @@ export default class Order extends BaseModel {
   declare quote: BelongsTo<typeof Quote>
 
   @column()
-  declare status: OrderStatus;
+  declare status: OrderStatus
+
+  @column()
+  declare dueDate: DateTime
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

@@ -1,5 +1,6 @@
 import { BaseSeeder } from '@adonisjs/lucid/seeders'
 import Order from '../../app/models/order.js'
+import { DateTime } from 'luxon'
 
 export default class OrderSeeder extends BaseSeeder {
   async run() {
@@ -10,6 +11,7 @@ export default class OrderSeeder extends BaseSeeder {
         clientId: 1,
         productId: 1,
         price: 15000,
+        dueDate: DateTime.local().plus({ days: 5 }),
       },
       {
         status: 'progress',
@@ -17,6 +19,7 @@ export default class OrderSeeder extends BaseSeeder {
         clientId: 2,
         productId: 2,
         price: 20000,
+        dueDate: DateTime.local().plus({ days: 40 }),
       },
     ])
   }

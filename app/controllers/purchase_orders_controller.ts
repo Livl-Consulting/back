@@ -29,6 +29,7 @@ export default class PurchaseOrdersController {
       supplierId: payload.supplierId,
       status: 'progress',
       totalAmount: totalAmount,
+      dueDate: payload.dueDate,
     })
 
     await purchaseOrder.related('products').attach(productPayload)

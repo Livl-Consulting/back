@@ -35,6 +35,9 @@ export default class PurchaseOrder extends BaseModel {
   @column()
   declare status: PurchaseOrderStatus
 
+  @column()
+  declare dueDate: DateTime
+
   @manyToMany(() => Product, {
     pivotColumns: ['quantity', 'unit_price'],
     pivotTable: 'purchase_order_products',

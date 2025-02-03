@@ -13,6 +13,7 @@ export default class extends BaseSchema {
 
       table.integer('supplier_id').unsigned().notNullable().references('suppliers.id')
       table.enum('status', ['progress', 'received', 'invoiced', 'cancelled'] satisfies PurchaseOrderStatus[]).defaultTo('progress').notNullable()
+      table.dateTime('due_date').notNullable()
 
       table.integer('price_request_id').unsigned().references('price_requests.id').nullable().unique()
       table.float('total_amount').notNullable()

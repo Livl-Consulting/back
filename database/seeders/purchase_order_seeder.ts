@@ -1,6 +1,7 @@
 import { BaseSeeder } from '@adonisjs/lucid/seeders'
 import Product from '../../app/models/product.js'
 import PurchaseOrder from '../../app/models/purchase_order.js'
+import { DateTime } from 'luxon'
 
 export default class PurchaseOrderSeeder extends BaseSeeder {
   async run() {
@@ -32,6 +33,7 @@ export default class PurchaseOrderSeeder extends BaseSeeder {
         supplierId: supplierOVH,
         status: 'progress',
         totalAmount: productHosting.price,
+        dueDate: DateTime.local().plus({ days: 2 }),
       }).then(order => {
         order.related('products').attach({
           [productHosting.id]: {
@@ -48,6 +50,7 @@ export default class PurchaseOrderSeeder extends BaseSeeder {
         supplierId: supplierTester,
         status: 'received',
         totalAmount: productTester.price * quantity,
+        dueDate: DateTime.local().plus({ days: 60 }),
       }).then(order => {
         order.related('products').attach({
           [productTester.id]: {
