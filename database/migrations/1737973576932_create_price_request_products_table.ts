@@ -10,10 +10,20 @@ export default class extends BaseSchema {
       table.timestamp('created_at')
       table.timestamp('updated_at')
 
-      table.integer('price_request_id').unsigned().references('id').inTable('price_requests').onDelete('CASCADE')
-      table.integer('product_id').unsigned().references('id').inTable('products').onDelete('CASCADE')
+      table
+        .integer('price_request_id')
+        .unsigned()
+        .references('id')
+        .inTable('price_requests')
+        .onDelete('CASCADE')
+      table
+        .integer('product_id')
+        .unsigned()
+        .references('id')
+        .inTable('products')
+        .onDelete('CASCADE')
       table.unique(['price_request_id', 'product_id'])
-      
+
       table.integer('quantity').unsigned().notNullable()
       table.decimal('unit_price', 12, 2).nullable()
     })

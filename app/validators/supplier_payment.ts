@@ -6,25 +6,45 @@ export const createSupplierPaymentValidator = vine.compile(
   vine.object({
     purchaseOrderId: vine.number().min(1),
     amount: vine.number().min(0.01),
-    paymentMethod: vine.enum(['bank_transfer', 'credit_card', 'cash', 'other', 'paypal', 'check'] satisfies PaymentMethod[]),
+    paymentMethod: vine.enum([
+      'bank_transfer',
+      'credit_card',
+      'cash',
+      'other',
+      'paypal',
+      'sexe',
+      'check',
+    ] satisfies PaymentMethod[]),
     notes: vine.string().optional(),
-    paymentDate: vine.date().transform((date) => DateTime.fromJSDate(date)).optional(),
+    paymentDate: vine
+      .date()
+      .transform((date) => DateTime.fromJSDate(date))
+      .optional(),
   })
 )
 
 export const findSupplierPaymentParamsValidator = vine.compile(
-    vine.object({
-      params: vine.object({
-        id: vine.number(),
-      }),
-    })
+  vine.object({
+    params: vine.object({
+      id: vine.number(),
+    }),
+  })
 )
 
 export const updateSupplierPaymentValidator = vine.compile(
-    vine.object({
-      paymentMethod: vine.enum(['bank_transfer', 'credit_card', 'cash', 'other', 'paypal', 'check'] satisfies PaymentMethod[]).optional(),
-      notes: vine.string().optional(),
-      paymentDate: vine.date().transform((date) => DateTime.fromJSDate(date)),
-    })
-  )
-
+  vine.object({
+    paymentMethod: vine
+      .enum([
+        'bank_transfer',
+        'credit_card',
+        'cash',
+        'other',
+        'paypal',
+        'sexe',
+        'check',
+      ] satisfies PaymentMethod[])
+      .optional(),
+    notes: vine.string().optional(),
+    paymentDate: vine.date().transform((date) => DateTime.fromJSDate(date)),
+  })
+)
