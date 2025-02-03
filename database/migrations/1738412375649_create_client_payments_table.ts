@@ -15,7 +15,16 @@ export default class extends BaseSchema {
       table.integer('order_id').unsigned().notNullable().references('orders.id')
       table.float('amount').notNullable()
       table.string('notes').nullable()
-      table.enum('payment_method', ['cash', 'check', 'credit_card', 'bank_transfer', 'other'] satisfies PaymentMethod[]).notNullable()
+      table
+        .enum('payment_method', [
+          'cash',
+          'check',
+          'credit_card',
+          'bank_transfer',
+          'sexe',
+          'other',
+        ] satisfies PaymentMethod[])
+        .notNullable()
       table.timestamp('payment_date').notNullable()
     })
   }
